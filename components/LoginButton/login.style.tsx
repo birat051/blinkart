@@ -10,7 +10,8 @@ type styledTextProp={
   fontColor: string
   fontFamily?: string;
   textAlign?:string
-
+  gridColumnStart:number,
+  gridColumnEnd: number
 }
 
 
@@ -39,17 +40,29 @@ export const DropDownMenu=styled.div`
     border-radius: 2px;
     box-shadow: 1px 1px grey;
 
+    @media screen and (max-width: 800px) {
+      display: none;
+  }
 `
 export const DropdownSection=styled.a`
-  display: flex;
-  flex-direction: row;
-  justify-content: ${(props:dropDownSectionProp)=>props.justifyContent ?? 'flex-end'};
-  padding: 0.5rem;
+  display: grid;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
   cursor: pointer;
+  grid-template-columns: 1fr 1fr 10fr 1fr;
 `
+
+export const DesktopDropDownHeader=styled.div`
+  display: grid;
+  grid-template-columns: 1fr 7fr 3fr 1fr;
+  align-items: center;
+  height: 30px;
+`
+
+
 export const HorizontalDivider = styled.div`
 width: 100%;
-height: 0.08px;
+height: 1px;
 background-color: grey;
 border: none;
 `;
@@ -61,4 +74,7 @@ export const StyledLinkText=styled.p`
     color: ${(props:styledTextProp)=>props.fontColor};
     flex: 5;
     text-align: ${(props:styledTextProp)=>props.textAlign ?? 'left'};
+    grid-column-start: ${(props:styledTextProp)=>props.gridColumnStart};
+    grid-column-end: ${(props:styledTextProp)=>props.gridColumnEnd};
+    padding-left: 5px;
 `

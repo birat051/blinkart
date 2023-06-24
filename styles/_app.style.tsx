@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const AppStyle=styled.div`
     background-color: white;
     color: black;
-    height: 100vh;
+    height: 80vh;
     scrollbar-width: none; 
     -ms-overflow-style: none;
     ::-webkit-scrollbar {
