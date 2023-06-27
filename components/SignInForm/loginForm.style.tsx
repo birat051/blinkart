@@ -56,3 +56,13 @@ export const SignupLink = styled(Link)`
      color: #2973EE;
      font-weight: 700;
 `
+
+export const FormError = styled.div`
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap');
+
+    font-family: 'Inter',sans-serif;
+    font-size: 0.8em;
+    font-weight: 500;
+    color: red;
+    margin-bottom: 0.5rem;
+`

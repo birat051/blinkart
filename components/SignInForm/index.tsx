@@ -1,9 +1,12 @@
 import React from 'react'
 import { FormSpacer, LoginForm, SignupLink } from './loginForm.style'
 import { CustomButton } from '@/styles/globals.style'
- 
 
-function SignInForm() {
+type formType={
+  changeIsLoading: (value:boolean)=>void
+}
+
+function SignInForm(props:formType) {
   return (
     <LoginForm>
         <div>
