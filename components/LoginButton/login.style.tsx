@@ -30,7 +30,8 @@ export const DropDownMenu=styled.div`
     flex-direction: column;
     left: 50%;
     transform: translateX(-50%);
-    top: calc(100% + 8px);
+    top: calc(100% + 1px);
+    // top: 100%;
     background-color: white;
     color: black;
     z-index: 2;
@@ -57,6 +58,7 @@ export const DesktopDropDownHeader=styled.div`
   grid-template-columns: 1fr 7fr 3fr 1fr;
   align-items: center;
   height: 30px;
+  cursor: pointer;
 `
 
 

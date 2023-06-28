@@ -17,7 +17,6 @@ const UserDetails=z.object({
 })
 
 function SignInForm(props:formType) {
-
   const router=useRouter()
   const {register,handleSubmit,formState,reset}=useForm({resolver: zodResolver(UserDetails)})
   const {errors}=formState

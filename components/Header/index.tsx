@@ -9,20 +9,35 @@ import { faBars } from "@fortawesome/free-solid-svg-icons"
 import { useState,useRef,useEffect } from "react"
 import MenuLinkSection from "../MenuSection"
 import { faUser } from "@fortawesome/free-solid-svg-icons"
+import { useRouter } from "next/router"
+import { useSession } from "next-auth/react"
 
 function PageHeader() {
   const [menuVisible, setmenuVisible] = useState(false)
   const onSearch=(query:string)=>{
     console.log('Search query is: ',query)
   }
+  const { data: session, status } = useSession()
 
   const mobileNavRef=useRef(null)
 
   const menuRef=useRef(null)
 
+  const router=useRouter()
+
+  const {signup} = router.query
+
   const changeMenuVisible=()=>{
     setmenuVisible(true)
   }
+
+  const handleLoginClick = () => {
+    if(signup)
+    router.push('/login')
+    if (router.pathname !== '/login') {
+      router.push('/login');
+    }
+  };
 
   useEffect(() => {
     const handleOutsideClick=(event: MouseEvent)=>{
@@ -58,12 +73,11 @@ function PageHeader() {
       </UnorderedLink>
     </Navigation>
     <MobileNav ref={mobileNavRef} navBarOpen={menuVisible}>
-      <MobileNavHeader>
+      {status==='unauthenticated' && <MobileNavHeader onClick={handleLoginClick}>
         <GridIcon icon={faUser} width='12px' height='12px' color='white' gridColumnStart={2} gridColumnEnd={3} gridRowStart={2} gridRowEnd={3}/>
         <h4>Login & Signup</h4>
         <GridImage src={img} placeholder='blur' alt='Blinkart logo' height='18' className="mobile-nav-logo" gridColumnStart={4} gridColumnEnd={5} gridRowStart={2} gridRowEnd={3}/>
-        
-      </MobileNavHeader>
+      </MobileNavHeader>}
       <MenuLinkSection />
     </MobileNav>
     </Header>
