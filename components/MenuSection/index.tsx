@@ -4,7 +4,7 @@ import { faUser,faBagShopping,faRightFromBracket } from '@fortawesome/free-solid
 import { GridIcon} from '@/styles/globals.style'
 import { DesktopLink } from '../Header/header.style'
 import { signOut, useSession } from 'next-auth/react'
-import { redirect } from 'next/dist/server/api-utils'
+// import { redirect } from 'next/dist/server/api-utils'
 import { useRouter } from 'next/router'
 
 

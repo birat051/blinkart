@@ -1,23 +1,24 @@
-import mongoose from "mongoose";
+// import mongoose from "mongoose";
 import { NextApiRequest, NextApiResponse } from 'next';
 import User from '../../models/user_model';
+import connectToDatabase from "@/utils/connectDB";
 
-async function connectToDatabase() {
-    try {
-      const dbLink = process.env.DB_LINK;
+// async function connectToDatabase() {
+//     try {
+//       const dbLink = process.env.DB_LINK;
   
-      if (!dbLink) {
-        throw new Error('DB_LINK environment variable is not set.');
-      }
+//       if (!dbLink) {
+//         throw new Error('DB_LINK environment variable is not set.');
+//       }
   
-      await mongoose.connect(dbLink, {
-      });
+//       await mongoose.connect(dbLink, {
+//       });
   
-      console.log('Connected to MongoDB!');
-    } catch (error) {
-      console.error('MongoDB connection error:', error);
-    }
-  }
+//       console.log('Connected to MongoDB!');
+//     } catch (error) {
+//       console.error('MongoDB connection error:', error);
+//     }
+// }
 
   // Call the connectToDatabase function to establish the MongoDB connection
 connectToDatabase();
