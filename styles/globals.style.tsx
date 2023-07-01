@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Image from 'next/image';
 
 type buttonStyle={
-    backgroundColor:string
+    backgroundcolor:string
     color: string
     height?: string
 }
@@ -16,14 +16,14 @@ type iconStyle={
 }
 
 type gridIconStyle={
-    gridColumnStart?: number,
-    gridColumnEnd?: number,
-    gridRowStart?: number,
-    gridRowEnd?: number
+    gridcolumnstart?: number,
+    gridcolumnend?: number,
+    gridrowstart?: number,
+    gridrowend?: number
 }
 
 export const CustomButton = styled.button`
-    background-color: ${(props:buttonStyle)=>props.backgroundColor};
+    background-color: ${(props:buttonStyle)=>props.backgroundcolor};
     justify-content: center;
     align-items: center;
     display: flex;
@@ -64,16 +64,16 @@ export const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
 `;
 
 export const GridIcon = styled(StyledFontAwesomeIcon)`
-  grid-column-start: ${(props:gridIconStyle)=>props.gridColumnStart};
-  grid-column-end: ${(props:gridIconStyle)=>props.gridColumnEnd};
-  grid-row-end: ${(props:gridIconStyle)=>props.gridRowEnd};
-  grid-row-start: ${(props:gridIconStyle)=>props.gridRowStart};
+  grid-column-start: ${(props:gridIconStyle)=>props.gridcolumnstart};
+  grid-column-end: ${(props:gridIconStyle)=>props.gridcolumnend};
+  grid-row-end: ${(props:gridIconStyle)=>props.gridrowend};
+  grid-row-start: ${(props:gridIconStyle)=>props.gridrowstart};
 `;
 
 export const GridImage = styled(Image)`
-    grid-column-start: ${(props:gridIconStyle)=>props.gridColumnStart??1};
-  grid-column-end: ${(props:gridIconStyle)=>props.gridColumnEnd??1};
-  grid-row-end: ${(props:gridIconStyle)=>props.gridRowEnd??1};
-  grid-row-start: ${(props:gridIconStyle)=>props.gridRowStart??1};
+    grid-column-start: ${(props:gridIconStyle)=>props.gridcolumnstart??1};
+  grid-column-end: ${(props:gridIconStyle)=>props.gridcolumnend??1};
+  grid-row-end: ${(props:gridIconStyle)=>props.gridrowend??1};
+  grid-row-start: ${(props:gridIconStyle)=>props.gridrowstart??1};
 `
 

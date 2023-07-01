@@ -10,8 +10,8 @@ type styledTextProp={
   fontColor: string
   fontFamily?: string;
   textAlign?:string
-  gridColumnStart:number,
-  gridColumnEnd: number
+  gridcolumnstart:number,
+  gridcolumnend: number
 }
 
 
@@ -76,7 +76,7 @@ export const StyledLinkText=styled.p`
     color: ${(props:styledTextProp)=>props.fontColor};
     flex: 5;
     text-align: ${(props:styledTextProp)=>props.textAlign ?? 'left'};
-    grid-column-start: ${(props:styledTextProp)=>props.gridColumnStart};
-    grid-column-end: ${(props:styledTextProp)=>props.gridColumnEnd};
+    grid-column-start: ${(props:styledTextProp)=>props.gridcolumnstart};
+    grid-column-end: ${(props:styledTextProp)=>props.gridcolumnend};
     padding-left: 5px;
 `

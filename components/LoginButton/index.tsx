@@ -25,8 +25,8 @@ function LoginButton() {
   };
   return (
     <MenuContainer onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-        {status==="unauthenticated" && <CustomButton backgroundColor='white' color='rgb(41,116,241)' onClick={handleLoginClick}>Login</CustomButton>}
-        {status==="authenticated" && session && <CustomButton backgroundColor='white' color='rgb(41,116,241)' onClick={handleLoginClick}><span>{session?.user?.name}</span></CustomButton>}
+        {status==="unauthenticated" && <CustomButton backgroundcolor='white' color='rgb(41,116,241)' onClick={handleLoginClick}>Login</CustomButton>}
+        {status==="authenticated" && session && <CustomButton backgroundcolor='white' color='rgb(41,116,241)' onClick={handleLoginClick}><span>{session?.user?.name}</span></CustomButton>}
         {
             dropdownVisible && 
                 <DropDownMenu>

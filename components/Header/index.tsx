@@ -74,9 +74,9 @@ function PageHeader() {
     </Navigation>
     <MobileNav ref={mobileNavRef} navBarOpen={menuVisible}>
       {status==='unauthenticated' && <MobileNavHeader onClick={handleLoginClick}>
-        <GridIcon icon={faUser} width='12px' height='12px' color='white' gridColumnStart={2} gridColumnEnd={3} gridRowStart={2} gridRowEnd={3}/>
+        <GridIcon icon={faUser} width='12px' height='12px' color='white' gridcolumnstart={2} gridcolumnend={3} gridrowstart={2} gridrowend={3}/>
         <h4>Login & Signup</h4>
-        <GridImage src={img} placeholder='blur' alt='Blinkart logo' height='18' className="mobile-nav-logo" gridColumnStart={4} gridColumnEnd={5} gridRowStart={2} gridRowEnd={3}/>
+        <GridImage src={img} placeholder='blur' alt='Blinkart logo' height='18' className="mobile-nav-logo" gridcolumnstart={4} gridcolumnend={5} gridrowstart={2} gridrowend={3}/>
       </MobileNavHeader>}
       <MenuLinkSection />
     </MobileNav>

@@ -47,7 +47,7 @@ function SignInForm(props:formType) {
         <input type='password' placeholder='Enter your password' {...register('password')}></input>
         {errors.password && <FormError>{errors.password.message?.toString()}</FormError>}
         <FormSpacer />
-        <CustomButton backgroundColor='#FA651B' color='white' height='40px' type='submit'>Login</CustomButton>
+        <CustomButton backgroundcolor='#FA651B' color='white' height='40px' type='submit'>Login</CustomButton>
         </div>
         <div>
           <SignupLink href='/login?signup=true'>New to Blinkart? Create an account</SignupLink>

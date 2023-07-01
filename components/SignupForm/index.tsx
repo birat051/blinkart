@@ -73,7 +73,7 @@ function SignupForm(props:formType) {
         {errors.confirmpass && (
         <FormError>{errors.confirmpass.message?.toString()}</FormError>)}
         <FormSpacer />
-        <CustomButton backgroundColor='#FA651B' color='white' height='40px' type='submit'>Register</CustomButton>
+        <CustomButton backgroundcolor='#FA651B' color='white' height='40px' type='submit'>Register</CustomButton>
         </div>
         <div>
           <SignupLink href='/login'>Existing User? Login</SignupLink>

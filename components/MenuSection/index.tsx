@@ -22,15 +22,15 @@ function MenuLinkSection() {
     <MenuLink>
                         {status==='unauthenticated' && <DesktopLink>
                             <DesktopDropDownHeader onClick={signUpHandler}>
-                                <StyledLinkText  fontWeight={600} fontColor='black' gridColumnStart={2} gridColumnEnd={3}>New Customer?</StyledLinkText>
-                                <StyledLinkText fontWeight={600} fontColor='rgb(41,116,241)' textAlign='right' gridColumnStart={3} gridColumnEnd={4}>Signup</StyledLinkText>
+                                <StyledLinkText  fontWeight={600} fontColor='black' gridcolumnstart={2} gridcolumnend={3}>New Customer?</StyledLinkText>
+                                <StyledLinkText fontWeight={600} fontColor='rgb(41,116,241)' textAlign='right' gridcolumnstart={3} gridcolumnend={4}>Signup</StyledLinkText>
                             </DesktopDropDownHeader>
                             <HorizontalDivider />
                         </DesktopLink>}
                         <li>
                             <DropdownSection href="/profile">
-                            <GridIcon icon={faUser} width='15px' height='15px' color='#2974F1' gridColumnStart={2} gridColumnEnd={3}/>
-                                <StyledLinkText fontWeight={400} fontColor='black' fontFamily="'Noto Sans', sans-serif" gridColumnStart={3} gridColumnEnd={4}>
+                            <GridIcon icon={faUser} width='15px' height='15px' color='#2974F1' gridcolumnstart={2} gridcolumnend={3}/>
+                                <StyledLinkText fontWeight={400} fontColor='black' fontFamily="'Noto Sans', sans-serif" gridcolumnstart={3} gridcolumnend={4}>
                                     My Account
                                 </StyledLinkText>
                             </DropdownSection>
@@ -38,8 +38,8 @@ function MenuLinkSection() {
                         </li>
                         <li>
                             <DropdownSection href='/orders'>
-                            <GridIcon icon={faBagShopping} width='15px' height='15px' color='#2974F1' gridColumnStart={2} gridColumnEnd={3}/>
-                                <StyledLinkText  fontWeight={400} fontColor='black' fontFamily="'Noto Sans', sans-serif" gridColumnStart={3} gridColumnEnd={4}>
+                            <GridIcon icon={faBagShopping} width='15px' height='15px' color='#2974F1' gridcolumnstart={2} gridcolumnend={3}/>
+                                <StyledLinkText  fontWeight={400} fontColor='black' fontFamily="'Noto Sans', sans-serif" gridcolumnstart={3} gridcolumnend={4}>
                                     My Orders
                                 </StyledLinkText>
 
@@ -48,8 +48,8 @@ function MenuLinkSection() {
                         </li>
                         {status==='authenticated' && session && <li>
                             <DropdownSection href='#' onClick={logoutHandler}>
-                            <GridIcon icon={faRightFromBracket} width='15px' height='15px' color='#2974F1' gridColumnStart={2} gridColumnEnd={3}/>
-                                <StyledLinkText  fontWeight={400} fontColor='black' fontFamily="'Noto Sans', sans-serif" gridColumnStart={3} gridColumnEnd={4}>
+                            <GridIcon icon={faRightFromBracket} width='15px' height='15px' color='#2974F1' gridcolumnstart={2} gridcolumnend={3}/>
+                                <StyledLinkText  fontWeight={400} fontColor='black' fontFamily="'Noto Sans', sans-serif" gridcolumnstart={3} gridcolumnend={4}>
                                     Signout
                                 </StyledLinkText>
                             </DropdownSection>

@@ -34,4 +34,9 @@ export const LoginFeature = styled.div`
         font-family: 'Noto Sans',sans-serif;
         font-weight: 400;
     }
+
+    @media screen and (max-width: 900px)
+    {
+        display: none;
+    }
 `

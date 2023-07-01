@@ -1,18 +1,38 @@
 import { AppStyle } from '@/styles/_app.style'
 import { LoginContainer, LoginFeature } from '@/styles/login.style'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import img from '../public/blinkart_login_photo.png'
 import Image from 'next/image'
 import SignInForm from '@/components/SignInForm'
 import { useRouter } from 'next/router'
 import SignupForm from '@/components/SignupForm'
 import LoadingOverlayWrapper from 'react-loading-overlay-ts'
+import { useSession } from 'next-auth/react'
 
 function LoginPage() {
-  const { signup } = useRouter().query
+  const router=useRouter()
+  const { signup } = router.query
   const [isLoading, setisLoading] = useState(false)
   const changeIsLoading=(value:boolean)=>{
     setisLoading(value)
+  }
+  const { data: session, status } = useSession()
+  useEffect(() => {
+    if(status==='loading')
+    {
+      return
+    }
+    else if(status==='authenticated')
+    router.push('/')
+  }, [status])
+  if(status==='loading')
+  {
+    return (
+      <LoadingOverlayWrapper active={true} >
+         <AppStyle>
+         </AppStyle>
+         </LoadingOverlayWrapper>
+    )
   }
   return (
     <LoadingOverlayWrapper active={isLoading}>
