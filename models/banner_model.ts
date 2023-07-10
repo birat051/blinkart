@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-const { Schema } = mongoose;
+const { Schema,Model } = mongoose;
 
 const bannerSchema = new Schema({
   title: {
@@ -22,6 +22,24 @@ const bannerSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  isActive: {
+    type: Boolean,
+    default: true
+  }
 });
 
-export default mongoose.models.banner || mongoose.model('banner', bannerSchema);
+export interface Banner extends Document {
+  title: string;
+  imageUrl: string;
+  link: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+
+
+// export default mongoose.models.banner || mongoose.model('banner', bannerSchema);
+const BannerModel: typeof Model<Banner> =
+  mongoose.models.banner || mongoose.model<Banner>("banner", bannerSchema);
+
+export default BannerModel;
