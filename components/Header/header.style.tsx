@@ -101,6 +101,7 @@ export const ImageComponent=styled.div`
      display: flex;
      justify-content: flex-start;
      align-items: center;
+     /* margin-right: 1rem; */
     @media screen and (max-width:800px){
         flex: 4;
     }

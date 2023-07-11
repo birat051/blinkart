@@ -1,15 +1,13 @@
 import React from 'react'
-import CategoryModel from '@/models/category_model'
 import { CategoryContainer } from './Category.style'
+import { ProductCategory } from '@/models/product_category_model'
 
-type categoryPropType={
-    categoryName: string,
-    categoryThumbnail: string,
-    subcategories?: typeof CategoryModel,
-    categoryUrl?: string,
+type categoryPropType=
+{
+  category: ProductCategory[]
 }
 
-function Category(props: categoryPropType) {
+function CategoryDisplay(props: categoryPropType) {
   return (
     <CategoryContainer>
         
@@ -17,4 +15,4 @@ function Category(props: categoryPropType) {
   )
 }
 
-export default Category
+export default CategoryDisplay
