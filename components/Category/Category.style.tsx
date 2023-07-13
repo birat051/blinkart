@@ -9,6 +9,14 @@ export const CategoryContainer=styled.div`
     border: 0.5px solid grey;
     background-color: white;
     overflow-x: scroll;
+    @media screen and (max-width: 600px){
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+        justify-content: flex-start;
+    }
+    ::-webkit-scrollbar {
+    display: none;
+    }
 `
 
 export const CategoryBlock=styled.div`
@@ -22,6 +30,11 @@ export const CategoryBlock=styled.div`
         font-family: 'Noto Sans',sans-serif;
         font-size: 0.75em;
         font-weight: 500;
+    }
+
+    @media screen and (max-width: 800px){
+        margin-right: 0.5rem;
+        margin-left: 0.5rem;
     }
 `
 

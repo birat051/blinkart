@@ -8,7 +8,7 @@ type bannerType=
 export const BannerContainer=styled.div`
     position: relative;
     /* width: 100%; */
-    height: 200px;
+    height: 300px;
     display: flex;
     flex-direction: row;
     overflow-x: scroll;
@@ -18,6 +18,9 @@ export const BannerContainer=styled.div`
     margin-right: 0.5rem;
     margin-top: 2rem;
     margin-bottom: 2rem;
+    @media screen and (max-width: 600px){
+        height: 150px;
+    }
 `
 
 export const BannerImage=styled.div.attrs((props) => ({
