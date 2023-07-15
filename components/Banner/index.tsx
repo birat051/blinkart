@@ -13,13 +13,13 @@ function BannerSlider(props: bannerPropType) {
     const [currentIndex, setcurrentIndex] = useState(0)
     const router=useRouter()
     const goToPrevBanner=()=>{
-    console.log('Going to prev banner')
+    // console.log('Going to prev banner')
     const isFirst=currentIndex===0
     const newIndex= isFirst? props.banners.length-1:currentIndex-1
     setcurrentIndex(newIndex)
     }
     const goToNextBanner=()=>{
-    console.log('Going to next banner')
+    // console.log('Going to next banner')
     const isLast=currentIndex===props.banners.length-1
     const newIndex=isLast? 0:currentIndex+1
     setcurrentIndex(newIndex)

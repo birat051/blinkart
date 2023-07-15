@@ -34,7 +34,7 @@ export const DropDownMenu=styled.div`
     // top: 100%;
     background-color: white;
     color: black;
-    z-index: 2;
+    z-index: 4;
     transition: 1s ease-in;
     width: 220px;
     border: solid 1px white;

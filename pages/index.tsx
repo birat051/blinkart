@@ -9,13 +9,15 @@ import ProductCategoryModel from '@/models/product_category_model'
 
 type homePropType={
   banners: Banner[],
-  category: ProductCategory[]
+  category: ProductCategory[],
+  subcategories: Object
 }
 
 export default function Home(props:homePropType) {
+  // console.log('Subcategories is: ',props.subcategories)
   return (
     <AppStyle>
-      <CategoryDisplay category={props.category}/>
+      <CategoryDisplay category={props.category} subcategories={props.subcategories}/>
       <BannerSlider banners={props.banners}/>
     </AppStyle>
   )
@@ -27,11 +29,34 @@ export async function getStaticProps()
   await connectToDatabase()
   const banners = await BannerModel.find({ isActive: true });
   const category = await ProductCategoryModel.find({parentCategory: null})
-  console.log('Category is: ',category)
+   // Get list of all subcategories for each category
+  const categoriesWithSubcategories = await Promise.all(
+    JSON.parse(JSON.stringify(category)).map(async (data:ProductCategory) => {
+      const subcategories = await ProductCategoryModel.find({
+        parentCategory: data._id,
+      });
+      return {
+        ...data,
+        subcategories: subcategories.map((subcategory) =>
+        JSON.parse(JSON.stringify(subcategory))
+          // subcategory.toObject()
+        ),
+      };
+    })
+  );
+
+  // Create a hashmap of subcategories with parent category id as the key
+  const subcategoryMap = categoriesWithSubcategories.reduce((map, category) => {
+    map[category.name] = category.subcategories;
+    return map;
+  }, {});
+  // console.log('Subcategory is: ',subcategoryMap)
+  // console.log('Category is: ',category)
   return {
     props: {
       banners: JSON.parse(JSON.stringify(banners)),
-      category: JSON.parse(JSON.stringify(category))
+      category: JSON.parse(JSON.stringify(category)),
+      subcategories: subcategoryMap
     },
   };
   }
@@ -42,7 +67,8 @@ export async function getStaticProps()
   return{
    props:{
     banners: [],
-    category: []
+    category: [],
+    subcategories: {}
    }   
   }
 }
