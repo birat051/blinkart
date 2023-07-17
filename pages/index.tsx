@@ -14,16 +14,21 @@ type homePropType={
   banners: Banner[],
   category: ProductCategory[],
   subcategories: Object,
-  topOffers: Offer[]
+  topOffers: Offer[],
+  offerByCategory: Object
 }
 
 export default function Home(props:homePropType) {
   // console.log('Subcategories is: ',props.subcategories)
+  console.log('Offers are: ',props.offerByCategory)
   return (
     <AppStyle>
       <CategoryDisplay category={props.category} subcategories={props.subcategories}/>
       <BannerSlider banners={props.banners}/>
       <Offers offerName='Top Offers' offerList={props.topOffers}/>
+      {Object.entries(props.offerByCategory).filter(([category, offers]) => offers.length > 0).map(([category, offers]) => (
+          <Offers key ={category}offerName={`Offers in ${category}`} offerList={offers} />
+      ))}
     </AppStyle>
   )
 }
@@ -35,6 +40,30 @@ export async function getStaticProps()
   const banners = await BannerModel.find({ isActive: true });
   const category = await ProductCategoryModel.find({parentCategory: null})
   const topoffers = await OfferModel.find({ isTopOffer: true }).populate('category');
+  const offersByCategory = await Promise.all(
+    JSON.parse(JSON.stringify(category)).map(async (data:ProductCategory) => {
+      const categoryOffers = await OfferModel.find({
+        $or: [
+          { category: data._id },
+          { parentCategory: data._id }
+        ],
+        isTopOffer: false
+      });
+      // console.log('Category offers is: ',categoryOffers)
+      return {
+        ...data,
+        offers: categoryOffers.map((categoryOffer) =>
+        JSON.parse(JSON.stringify(categoryOffer))
+          // subcategory.toObject()
+        ),
+      };
+    })
+  );
+  const offerMap = offersByCategory.reduce((map, category) => {
+    map[category.name] = category.offers;
+    return map;
+  }, {});
+  // console.log("Offers by category is: ",offerMap)
   // Get list of all subcategories for each category
   const categoriesWithSubcategories = await Promise.all(
     JSON.parse(JSON.stringify(category)).map(async (data:ProductCategory) => {
@@ -51,6 +80,7 @@ export async function getStaticProps()
     })
   );
 
+
   // Create a hashmap of subcategories with parent category id as the key
   const subcategoryMap = categoriesWithSubcategories.reduce((map, category) => {
     map[category.name] = category.subcategories;
@@ -63,7 +93,8 @@ export async function getStaticProps()
       banners: JSON.parse(JSON.stringify(banners)),
       category: JSON.parse(JSON.stringify(category)),
       subcategories: subcategoryMap,
-      topOffers: JSON.parse(JSON.stringify(topoffers))
+      topOffers: JSON.parse(JSON.stringify(topoffers)),
+      offerByCategory: offerMap
     },
   };
   }
@@ -76,7 +107,8 @@ export async function getStaticProps()
     banners: [],
     category: [],
     subcategories: {},
-    topOffers: []
+    topOffers: [],
+    offerByCategory: {}
    }   
   }
 }

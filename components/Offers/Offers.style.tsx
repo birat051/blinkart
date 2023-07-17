@@ -25,7 +25,7 @@ export const OfferContainer=styled.div`
 export const OfferList=styled.div`
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: flex-start;
     flex: 8;
     overflow-x: scroll;
     ::-webkit-scrollbar{
@@ -45,8 +45,8 @@ export const OfferBlock=styled.div`
     white-space: nowrap;
     padding-top: 10px;
     padding-bottom: 10px;
-    margin-left: 1rem;
-    margin-right: 1rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
     img{
 
         height: 200px;
@@ -60,6 +60,9 @@ export const OfferBlock=styled.div`
         color: black;
         margin-bottom: 10px;
         text-align: center;
+        align-items: flex-start;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
     h2{
         font-size: 1em;
