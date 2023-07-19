@@ -31,7 +31,7 @@ function CategoryView(props: categoryProp) {
 
   return (
     <Category onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-      <CategoryBlock onClick={() => goToCategory(`/categories/${props.category._id}`)} >
+      <CategoryBlock onClick={() => goToCategory(`/categories/${props.category._id}/1`)} >
         <Image src={props.category.imageUrl ?? ''} height={50} alt={`category image for ${props.category.name}`} width={50} />
         <CategorySpacer />
         <h1>{props.category.name}</h1>
