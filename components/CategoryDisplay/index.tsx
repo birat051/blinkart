@@ -31,7 +31,7 @@ function CategoryView(props: categoryProp) {
 
   return (
     <Category onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-      <CategoryBlock onClick={() => goToCategory(props.category.categoryURL)} >
+      <CategoryBlock onClick={() => goToCategory(`/categories/${props.category._id}`)} >
         <Image src={props.category.imageUrl ?? ''} height={50} alt={`category image for ${props.category.name}`} width={50} />
         <CategorySpacer />
         <h1>{props.category.name}</h1>
@@ -39,7 +39,7 @@ function CategoryView(props: categoryProp) {
       {props.subcategories.length != 0 && subCatVisible && <SubcategoryMenu>
       {props.subcategories.map((item)=>{
         return (
-          <div key={item.name+item._id} onClick={()=>goToCategory(item.categoryURL)}>{item.name}</div>
+          <div key={item.name+item._id} onClick={()=>goToCategory(`/categories/${item._id}`)}>{item.name}</div>
         )
       })}
     </SubcategoryMenu>}

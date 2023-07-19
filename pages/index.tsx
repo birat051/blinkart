@@ -18,9 +18,10 @@ type homePropType={
   offerByCategory: Object
 }
 
+
 export default function Home(props:homePropType) {
   // console.log('Subcategories is: ',props.subcategories)
-  console.log('Offers are: ',props.offerByCategory)
+  // console.log('Offers are: ',props.offerByCategory)
   return (
     <AppStyle>
       <CategoryDisplay category={props.category} subcategories={props.subcategories}/>
