@@ -1,3 +1,4 @@
+import Link from "next/link";
 import styled from "styled-components";
 
 export const CategoryContainer=styled.div`
@@ -64,20 +65,21 @@ export const SubcategoryMenu=styled.div`
     border: solid 0.5px grey;
     border-radius: 2px;
     box-shadow: 1px 1px grey;
-    div{
-        padding: 5px;
-        padding-left: 10px;
-        border-bottom: 0.5px solid grey;
-        font-family: 'Noto Sans',sans-serif;
-        font-size: 0.8em;
-        font-weight: 400;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        color: grey;
-        cursor: pointer;
-    }
-    div:hover{
+`
+
+export const SubCategoryLink = styled(Link)`
+    padding: 5px;
+    padding-left: 10px;
+    border-bottom: 0.5px solid grey;
+    font-family: 'Noto Sans',sans-serif;
+    font-size: 0.8em;
+    font-weight: 400;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: grey;
+    cursor: pointer;
+    :hover{
         color: rgb(41,116,241);
         background-color: #D3D3D3;
         font-weight: 500;

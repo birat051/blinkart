@@ -1,24 +1,29 @@
 import ProductFilter from '@/components/ProductFilter';
 import ProductView from '@/components/ProductView';
-import ProductCategoryModel from '@/models/product_category_model';
+import ProductCategoryModel, { ProductCategory } from '@/models/product_category_model';
 import ProductDataModel, { Product } from '@/models/product_data_model';
 import { CategoryPageContainer, PageLink, PageNumberContainer, PageNumberRow, PageSpacer, ProductColumn, ProductListView } from '@/styles/categorypage.style';
 import connectToDatabase from '@/utils/connectDB';
+import mongoose from 'mongoose';
 import { GetStaticPropsContext } from 'next';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React from 'react'
+import React, { useState } from 'react'
 import LoadingOverlayWrapper from 'react-loading-overlay-ts';
 
 type productType={
     products: Product[],
     pageNumber: string,
-    totalPages: number
+    totalPages: number,
+    category: ProductCategory,
+    parentCategory: ProductCategory | null,
+    minPrice: number,
+    maxPrice: number
   }
   
   function CategoryPage(props:productType) {
     const router= useRouter()
     const currentPage = parseInt(props.pageNumber);
+    const [filteredProducts, setFilteredProducts] = useState<Product[]>(props.products);
     const getPageNumbers = () => {
         const totalPages = props.totalPages;
         const displayPages = 4; // Number of pages to display
@@ -52,6 +57,11 @@ type productType={
     const goToPrev=()=>{
         router.push(`/categories/${router.query.iD}/${(currentPage-1).toString()}`)
     }
+    const applyPriceFilter = (price: number) => {
+      const filteredProducts = props.products.filter((product) => product.price <= price);
+      console.log('Filtered products are: ',filteredProducts)
+      setFilteredProducts(filteredProducts);
+    };
     if(router.isFallback)
       return (
           <CategoryPageContainer>
@@ -61,13 +71,15 @@ type productType={
     )
     return (
       <CategoryPageContainer>
-        <ProductFilter />
+        <ProductFilter category={props.category} parentCategory={props.parentCategory} minPrice={props.minPrice} maxPrice={props.maxPrice} applyPriceFilter={applyPriceFilter}/>
         <ProductColumn>
-        <ProductListView>
-        {props.products.map((product)=>{
-         return <ProductView product={product} key={product._id}/>
-        })}
-        </ProductListView>
+        {props.products.length > 0 && (
+          <ProductListView>
+            {props.products.map((product) => {
+              return <ProductView product={product} key={product._id} />;
+            })}
+          </ProductListView>
+        )}
         <PageNumberRow>
             <p>
                 Page {props.pageNumber} of {props.totalPages.toString()}
@@ -76,15 +88,15 @@ type productType={
             {props.pageNumber!='1' && <button onClick={goToPrev}>PREVIOUS</button>}
             {getPageNumbers().map((pageNumber) => (
               <PageLink
-                key={pageNumber}
                 href={`/categories/${router.query.iD}/${pageNumber}`}
-                passHref
+                key={pageNumber}
                 className={pageNumber.toString() == props.pageNumber ? 'active' : ''}
+                passHref
               >
                 {pageNumber}
               </PageLink>
             ))}
-            {props.pageNumber!=props.totalPages.toString() && <button onClick={goToNext}>NEXT</button>}
+            {props.pageNumber<props.totalPages.toString() && <button onClick={goToNext}>NEXT</button>}
             </PageNumberContainer>
             <PageSpacer/>
         </PageNumberRow>
@@ -125,22 +137,39 @@ export async function getStaticPaths() {
   export async function getStaticProps(context: GetStaticPropsContext) {
     const { params } = context;
     await connectToDatabase();
-  
     const page = parseInt(params?.pageNumber as string); // Parse the page number from the params
-  
     const products = await ProductDataModel.find({ category: params?.iD })
       .skip((page - 1) * 5) // Skip the products on previous pages
       .limit(5); // Fetch a maximum of 5 products for the current page
-
-
     const totalProducts = await ProductDataModel.countDocuments({ category: params?.iD });
     const totalPages = Math.ceil(totalProducts / 5);
-  
+    const category = await ProductCategoryModel.findOne({ _id: params?.iD });
+    // console.log('Got category: ',category)
+    let parentCategory = null
+    if(category.parentCategory!=null)
+    parentCategory = await ProductCategoryModel.findOne({_id: category.parentCategory})
+    const priceStats = await ProductDataModel.aggregate([
+      { $match: { category: new mongoose.Types.ObjectId(params?.iD as string) } },
+      {
+        $group: {
+          _id: null,
+          minPrice: { $min: '$price' },
+          maxPrice: { $max: '$price' },
+        },
+      },
+    ]);
+    // console.log('Products are: ',products)
+    // console.log('Price stats are: ',priceStats)
+    // console.log('Got parentCategory: ',parentCategory)
     return {
       props: {
         products: JSON.parse(JSON.stringify(products)),
         pageNumber: page,
-        totalPages: totalPages 
+        totalPages: totalPages,
+        category: JSON.parse(JSON.stringify(category)),
+        parentCategory: JSON.parse(JSON.stringify(parentCategory)),
+        minPrice: priceStats[0].minPrice,
+        maxPrice: priceStats[0].maxPrice,
       },
     };
 }

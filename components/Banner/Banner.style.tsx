@@ -56,12 +56,14 @@ export const BannerNav = styled.div.attrs((props) => ({
        border: 0.5px solid grey;
        &.left{
            left:0%;
+           color: grey;
            border-top-right-radius: 8px;
            border-bottom-right-radius: 8px;
        }
   
        &.right{
            right: 0%;
+           color: grey;
            border-top-left-radius: 8px;
            border-bottom-left-radius: 8px;
        }

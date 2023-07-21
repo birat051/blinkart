@@ -39,7 +39,7 @@ export const CustomButton = styled.button`
     border-radius: 1px;
     white-space: nowrap;
     span{
-      overflow: hidden;
+    overflow: hidden;
     text-overflow: ellipsis;
     padding-left: 10px;
     padding-right: 10px;

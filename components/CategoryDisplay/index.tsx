@@ -2,8 +2,9 @@ import { ProductCategory } from '@/models/product_category_model'
 import React, { useState } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { CategoryBlock, CategorySpacer, SubcategoryMenu } from '../Category/Category.style'
+import { CategoryBlock, CategorySpacer, SubCategoryLink, SubcategoryMenu } from '../Category/Category.style'
 import { Category } from './CategoryDisplay.style'
+import Link from 'next/link'
 
 type categoryProp = {
   subcategories: ProductCategory[],
@@ -39,7 +40,7 @@ function CategoryView(props: categoryProp) {
       {props.subcategories.length != 0 && subCatVisible && <SubcategoryMenu>
       {props.subcategories.map((item)=>{
         return (
-          <div key={item.name+item._id} onClick={()=>goToCategory(`/categories/${item._id}`)}>{item.name}</div>
+          <SubCategoryLink href= {`/categories/${item._id}/1`} key={item.name+item._id}>{item.name}</SubCategoryLink>
         )
       })}
     </SubcategoryMenu>}

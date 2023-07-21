@@ -91,4 +91,3 @@ export const PageLink= styled(Link).attrs((props) => ({
         justify-content: center;
     }
 `
-
