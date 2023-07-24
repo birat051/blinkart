@@ -12,6 +12,9 @@ import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import ReviewDataModel, { ReviewModel } from '@/models/product_review_model';
 import UserDataModel, { UserModel } from '@/models/user_model';
 import ReviewSection from '@/components/ReviewSection';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/stateManagement/store';
+import { ADD_TO_CART, CartItem } from '@/stateManagement/actions/cartActions';
 
 type productPageProp= {
     product: Product,
@@ -28,6 +31,8 @@ type productPageProp= {
 
 function ProductPage(props: productPageProp) {
   const [currentIndex, setcurrentIndex] = useState(0)
+  const dispatch=useDispatch()
+  const cartItems = useSelector((state: RootState) => state.cart);
   const discount=props.product.discount!=null?Math.floor(props.product.price*props.product.discount/100):0
   const discountedPrice=Math.floor(props.product.price-discount)
   // console.log('Discount is: ',discount)
@@ -44,7 +49,21 @@ function ProductPage(props: productPageProp) {
     setcurrentIndex(newIndex)
   }
   const addToCart=()=>{
+    const cartItem: CartItem = {
+      id: props.product._id, 
+      name: props.product.name,
+      imageUrl: props.product.imageUrls[0],
+      price: props.product.price,
+      discountedPrice: discountedPrice,
+      discount: props.product.discount ?? 0, 
+      quantity: 1, 
+    };
+    dispatch({
+      type: ADD_TO_CART,
+      payload: cartItem,
+    });
     console.log('Added to cart')
+    console.log('Cart items are: ',cartItems)
   } 
   const buyNow=()=>{
     console.log('Clicked on buy now')

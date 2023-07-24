@@ -15,8 +15,18 @@ interface User {
 // console.log('Mongo URI is: ',mongoUri)
 
 const authOptions: NextAuthOptions = {
+  callbacks: {
+    session: ({ session, token }) => ({
+      ...session,
+      user: {
+        ...session.user,
+        id: token.sub,
+      },
+    }),
+  },
   session: {
     strategy: 'jwt',
+
   },
   providers: [
     CredentialsProvider({
@@ -42,7 +52,7 @@ const authOptions: NextAuthOptions = {
 
           if (user) {
             if (user.password === password) {
-              return user;
+              return { ...user, id: user._id.toString() };
             } else {
               throw new Error('Incorrect password');
             }
