@@ -9,6 +9,9 @@ export const ProductPageContainer= styled.div`
     align-items: flex-start;
     min-height: 80vh;
     background-color: white;
+    @media screen and (max-width: 600px){
+        flex-direction: column;
+    }
 `
 
 export const ProductImageContainer = styled.div`
@@ -147,7 +150,7 @@ export const ProductColumnLeft=styled.div`
     flex-direction: column;
     align-items: stretch;
     max-width: 400px;
-
+    margin-bottom: 2rem;
 `
 
 export const ProductButtonContainer=styled.div`

@@ -4,6 +4,7 @@ const { Schema,Model } = mongoose;
 
 export interface ReviewModel extends Document
 {
+    _id: string
     user: string,
     product: string,
     rating: number,

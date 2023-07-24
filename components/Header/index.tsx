@@ -55,7 +55,7 @@ function PageHeader() {
     <HeaderDiv>
     <StyledFontAwesomeIcon icon={faBars}  width='18px' height='18px' color='white' display='none' onClick={changeMenuVisible} ref={menuRef}/>
     <ImageComponent>
-    <Image src={img} alt='Blinkart logo' height='25'/>
+    <Image src={img} alt='Blinkart logo' height='25' onClick={()=>router.push('/')} style={{cursor: 'pointer'}}/>
     </ImageComponent>
     <SearchBar onSearch={onSearch}/>
     </HeaderDiv>

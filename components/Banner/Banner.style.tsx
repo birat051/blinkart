@@ -18,6 +18,7 @@ export const BannerContainer=styled.div`
     margin-right: 0.5rem;
     margin-top: 2rem;
     margin-bottom: 2rem;
+    cursor: pointer;
     @media screen and (max-width: 600px){
         height: 150px;
     }

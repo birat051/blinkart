@@ -9,13 +9,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { GetStaticPropsContext } from 'next';
 import React, { useState } from 'react'
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
-import ReviewDataModel from '@/models/product_review_model';
+import ReviewDataModel, { ReviewModel } from '@/models/product_review_model';
+import UserDataModel, { UserModel } from '@/models/user_model';
+import ReviewSection from '@/components/ReviewSection';
 
 type productPageProp= {
     product: Product,
     seller: SellerDataModel,
     category :ProductCategory,
-    parentCategory: ProductCategory | null
+    parentCategory: ProductCategory | null,
+    reviews: ReviewModel[],
+    reviewUserMap: {
+      [key: string]: string // Replace 'any' with the type of your subcategory object
+    },
+    totalReviews: number,
+    averageRating: string
 }
 
 function ProductPage(props: productPageProp) {
@@ -90,6 +98,7 @@ function ProductPage(props: productPageProp) {
         <h5>Seller</h5>
         <h3>{props.seller.name}</h3>
         <p>{props.seller.address}</p>
+        {props.totalReviews>0 && <ReviewSection reviews={props.reviews} totalReviewCount={props.totalReviews} avgRating={props.averageRating} productId={props.product._id} reviewUser={props.reviewUserMap}/>}
       </ProductDetailsContainer>
     </ProductPageContainer>
   )
@@ -109,7 +118,7 @@ export async function getStaticPaths(){
     }
     return {
       paths,
-      fallback: true, // or true if you want to enable fallback rendering
+      fallback: true, 
     };
 }
 
@@ -119,20 +128,39 @@ export async function getStaticProps(context:GetStaticPropsContext){
     const seller = await Seller.findOne({_id: product.seller})
     const category = await ProductCategoryModel.findOne({_id: product.category})
     const reviews=await ReviewDataModel.find({product:product._id})
-    console.log('Reviews are: ',reviews)
+    const totalReviews=await ReviewDataModel.countDocuments({product:product._id})
+    // console.log('Reviews are: ',reviews)
+    const userIds = JSON.parse(JSON.stringify(reviews)).map((review:ReviewModel) => review.user);
+    const users = await UserDataModel.find({ _id: { $in: userIds } }).lean(); // Fetch users by their ids
+    const reviewUserMap: { [key: string]: string } = {};
+    JSON.parse(JSON.stringify(reviews)).forEach((review:ReviewModel) => {
+      const user = JSON.parse(JSON.stringify(users)).find((user:UserModel) => user._id.toString() === review.user.toString());
+      if (user) {
+          reviewUserMap[review._id] = user.name;
+      }
+    });
     let parentCategory=null
     if(category.parentCategory!=null)
     {
         parentCategory = await ProductCategoryModel.findOne({_id: category.parentCategory})
     }
-    console.log('Got category: ',category)
-    console.log('Got parent category: ',parentCategory)
+    let totalRating = 0;
+    reviews.forEach((review: ReviewModel) => {
+      totalRating += review.rating;
+    });
+    // Calculate the average rating
+    const averageRating = totalRating / totalReviews;
+    const roundedAverageRating = averageRating.toFixed(1);
     return {
         props: {
             product: JSON.parse(JSON.stringify(product)),
             seller: JSON.parse(JSON.stringify(seller)),
             parentCategory: parentCategory!=null?JSON.parse(JSON.stringify(parentCategory)):null,
-            category : JSON.parse(JSON.stringify(category))            
+            category : JSON.parse(JSON.stringify(category)),
+            reviews: JSON.parse(JSON.stringify(reviews)),
+            reviewUserMap: reviewUserMap,
+            totalReviews: totalReviews,
+            averageRating: roundedAverageRating
     }
     }
 }

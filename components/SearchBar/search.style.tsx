@@ -15,7 +15,7 @@ export const Search=styled.div`
     border: 1px solid white;
     border-radius: 2px;
 
-    @media screen and (max-width: 600px){
+    @media screen and (max-width: 900px){
       display: none;
     }
 `
