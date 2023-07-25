@@ -6,12 +6,14 @@ export interface UserModel extends Document {
     password: string;
     name: string;
     _id: string;
+    mobileNumber: string | null;
 }
 
 const userSchema= new Schema({
     email: {type: String,unique: true},
     password: {type: String},
-    name: {type: String}
+    name: {type: String},
+    mobileNumber: {type:String,default: null}
 })
 
 const UserDataModel: typeof Model<UserModel> =
