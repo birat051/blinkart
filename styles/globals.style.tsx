@@ -23,6 +23,7 @@ type gridIconStyle={
 }
 
 export const CustomButton = styled.button`
+     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap');
     background-color: ${(props:buttonStyle)=>props.backgroundcolor};
     justify-content: center;
     align-items: center;

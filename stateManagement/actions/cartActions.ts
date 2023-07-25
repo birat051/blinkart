@@ -44,9 +44,7 @@ export const REDUCE_ITEM_QUANTITY = 'REDUCE_ITEM_QUANTITY';
   
   interface ReduceItemQuantityAction {
     type: typeof REDUCE_ITEM_QUANTITY;
-    payload: {
-      itemId: string;
-    };
+    payload: string;
   }
   
   export type CartActionTypes =

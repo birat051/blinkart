@@ -51,7 +51,7 @@ import {
         return {
           ...state,
           items: state.items.map(item => {
-            if (item.id === action.payload.itemId) {
+            if (item.id === action.payload) {
               return {
                 ...item,
                 quantity: item.quantity - 1,
