@@ -22,6 +22,10 @@ export const ProfilePageLeftColumn=styled.div`
     flex-direction: column;
     flex: 3;
     margin-right: 0.5rem;
+    @media screen and (max-width: 600px){
+        margin-bottom: 1rem;
+        margin-right: 0px;
+    }
 `
 
 export const ProfilePageRightColumn = styled.div`

@@ -35,6 +35,14 @@ const addressSchema = new Schema({
     addressType: {
         type: String,
         required: true
+    },
+    locality: {
+      type: String,
+      required: true
+    },
+    mobileNumber: {
+      type: String,
+      required:true
     }
   });
 
@@ -46,8 +54,10 @@ export interface Address extends Document {
     postalCode: Date;
     default: boolean;
     _id: string;
-    addressType: string,
-    name: string
+    addressType: string;
+    name: string;
+    locality: string;
+    mobileNumber: string
 }
 
 const AddressModel: typeof Model<Address> =
