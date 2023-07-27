@@ -4,6 +4,8 @@ import { AddAddress, ManageAddressContainer } from './ManageAddresses.style'
 import AddressForm from '../AddressForm'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAdd } from '@fortawesome/free-solid-svg-icons'
+import AddressView from '../AddressView'
+import EditAddressForm from '../EditAddressForm'
 
 type addressProp={
     addresses: Address[],
@@ -12,8 +14,25 @@ type addressProp={
 
 function ManageAddresses(props:addressProp) {
   const [addressForm, setaddressForm] = useState(false)
+  const [addressList, setaddressList] = useState(props.addresses)
+  const [selectedAddress, setSelectedAddress] = useState<string | null>(null);
   const changeAddressFormState=()=>{
     setaddressForm(!addressForm)
+  }
+  const removeAddress=(addressId:string)=>{
+    const newAddressList=addressList.filter((address)=>address._id!=addressId)
+    setaddressList(newAddressList)
+  }
+  const editAddress=(addressId:string)=>{
+    setSelectedAddress(addressId)
+  }
+  const closeAddressForm=()=>{
+    setSelectedAddress(null)
+  }
+  const updateAddressData=(inputaddress:Address)=>{
+    let newAddressList=addressList.filter((address)=>address._id!=inputaddress._id)
+    newAddressList.push(inputaddress)
+    setaddressList(newAddressList)
   }
   return (
     <ManageAddressContainer>
@@ -25,6 +44,13 @@ function ManageAddresses(props:addressProp) {
         {
             addressForm && <AddressForm closeAddressForm={changeAddressFormState} changeLoading={props.changeLoading} isAddressEmpty={props.addresses.length===0}/>
         }
+        {addressList.map((address,index)=>{
+          if (address._id!=selectedAddress)
+          return(<AddressView key={address.street+index} address={address} removeAddress={removeAddress} editAddress={editAddress}/>)
+          return (
+              <EditAddressForm key={index+address._id} closeAddressForm={closeAddressForm} address={address} changeLoading={props.changeLoading} updateAddressData={updateAddressData}/>
+          )
+        })}
     </ManageAddressContainer>
   )
 }

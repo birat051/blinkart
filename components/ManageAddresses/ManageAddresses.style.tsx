@@ -30,6 +30,7 @@ export const AddAddress = styled.div`
     align-items: center;
     border-radius: 2px;
     cursor: pointer;
+    margin-bottom: 1rem;
     h2{
         padding-left: 8px;
         font-family: 'Inter',sans-serif;

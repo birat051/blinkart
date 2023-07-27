@@ -1,23 +1,13 @@
 import React, { useState } from 'react'
-import { AddressCancelButton, AddressFormButtons, AddressFormContainer, AddressInputRow, AddressSaveButton, AddressTypeContainer, StateDropdownContainer, StyledRadioInput } from './AddressForm.style'
-import { z } from 'zod';
+import { AddressCancelButton, AddressFormButtons, AddressFormContainer, AddressInputRow, AddressSaveButton, AddressTypeContainer, StateDropdownContainer, StyledRadioInput } from '../AddressForm/AddressForm.style'
 import { useController, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { indianStates } from '@/utils/constants';
 import { useSession } from 'next-auth/react';
 import { User } from 'next-auth';
+import { AddressDetails } from '../AddressForm';
+import { Address } from '@/models/address_model';
 
-
-export const AddressDetails=z.object({
-    name: z.string().min(3),
-    mobileNumber: z.string().length(10),
-    pincode: z.string().length(6),
-    locality: z.string().min(3),
-    address: z.string().min(5),
-    city: z.string().min(3),
-    state: z.string().min(3),
-    addressType: z.string().length(4)
-})
 
 interface CustomUser extends User {
     id: string;
@@ -26,12 +16,13 @@ interface CustomUser extends User {
 type addressFormProp={
     closeAddressForm: ()=>void,
     changeLoading: (value:boolean)=>void,
-    isAddressEmpty: boolean
+    address: Address,
+    updateAddressData: (inputaddress:Address)=>void
 }
 
-function AddressForm(props:addressFormProp) {
-    const { data: session, status } = useSession()
-    const [selectedAddress, setSelectedAddress] = useState<string | null>(null);
+function EditAddressForm(props:addressFormProp) {
+    const { data: session } = useSession()
+    const [selectedAddress, setSelectedAddress] = useState<string | null>(props.address.addressType);
     const handleAddressChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       setSelectedAddress(event.target.value);
     };
@@ -51,30 +42,36 @@ function AddressForm(props:addressFormProp) {
         city: formValues.city,
         state: formValues.state,
         addressType: formValues.addressType,
-        isDefault: props.isAddressEmpty?true:false,
+        isDefault: false,
         userId: (session?.user as CustomUser)?.id
     }
     console.log('Data is: ',data)
     props.changeLoading(true)
     try{
-        const response = await fetch('/api/address/insert', {
-            method: 'POST',
+        const response = await fetch(`/api/address/edit?addressId=${props.address._id}`, {
+            method: 'PUT',
             headers: {
               'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
           });
       console.log('Response is: ',response.body)
-      if(response.status===201)
+      if(response.status===200)
           {
-            reset()
-            alert('Address has been successfully added');
+            const data=await response.json()
+            props.changeLoading(false)
+            alert('Address has been successfully updated');
+            props.updateAddressData(data)
+            props.closeAddressForm()
           }
       else
-      alert(response.body);
+      {
+        const errorData = await response.json();
+        alert(errorData.error);
+      }
     }
     catch(error){
-        alert('Unexpected error occured while trying to add address')
+        alert('Unexpected error occured while trying to update address')
     }
     props.changeLoading(false)
   }
@@ -83,29 +80,29 @@ function AddressForm(props:addressFormProp) {
       <h2>ADD A NEW ADDRESS</h2>
       <AddressInputRow>
         <div>
-        <input placeholder='Name' type='text' {...register('name')}/>
+        <input placeholder='Name' type='text' {...register('name')} defaultValue={props.address.name}/>
         {errors.name && <p>{errors.name.message?.toString()}</p>}
         </div>
         <div>
-        <input placeholder='10-digit mobile number' type='number' maxLength={10} {...register('mobileNumber')}/>
+        <input placeholder='10-digit mobile number' type='number' maxLength={10} {...register('mobileNumber')} defaultValue={props.address.mobileNumber}/>
         {errors.mobileNumber && <p>{errors.mobileNumber?.message?.toString()}</p>}
         </div>
       </AddressInputRow>
       <AddressInputRow>
       <div>
-      <input placeholder='Pincode' type='number' maxLength={6} {...register('pincode')}/>
+      <input placeholder='Pincode' type='number' maxLength={6} {...register('pincode')} defaultValue={props.address.postalCode}/>
       {errors.pincode && <p>{errors.pincode?.message?.toString()}</p>}
       </div>
       <div>
-      <input placeholder='Locality' type='type' {...register('locality')}/>
+      <input placeholder='Locality' type='type' {...register('locality')} defaultValue={props.address.locality}/>
       {errors.locality && <p>{errors.locality?.message?.toString()}</p>}
       </div>
       </AddressInputRow>
-      <textarea placeholder='Address(Area and Street)' {...register('address')}/>
+      <textarea placeholder='Address(Area and Street)' {...register('address')} defaultValue={props.address.street}/>
       {errors.address && <p>{errors.address?.message?.toString()}</p>}
       <AddressInputRow>
       <div>
-        <input placeholder='City/Town/District' type='text' {...register('city')}/>
+        <input placeholder='City/Town/District' type='text' {...register('city')} defaultValue={props.address.city}/>
         {errors.city && <p>{errors.city?.message?.toString()}</p>}
         </div>
         <div>
@@ -153,4 +150,4 @@ function AddressForm(props:addressFormProp) {
   )
 }
 
-export default AddressForm
+export default EditAddressForm

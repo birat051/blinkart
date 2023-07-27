@@ -50,8 +50,8 @@ export interface Address extends Document {
     userId: string;
     street: string;
     city: string;
-    state: Date;
-    postalCode: Date;
+    state: string;
+    postalCode: string;
     default: boolean;
     _id: string;
     addressType: string;
