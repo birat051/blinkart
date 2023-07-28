@@ -34,15 +34,19 @@ function ManageAddresses(props:addressProp) {
     newAddressList.push(inputaddress)
     setaddressList(newAddressList)
   }
+  const addAddressData=(address:Address)=>{
+    const newList=[...addressList,address]
+    setaddressList(newList)
+  }
   return (
     <ManageAddressContainer>
         <h1>Manage Addresses</h1>
-        {!addressForm && <AddAddress onClick={changeAddressFormState}>
+        {!addressForm && <AddAddress onClick={changeAddressFormState} >
             <FontAwesomeIcon icon={faAdd} />
             <h2>ADD A NEW ADDRESS</h2>
         </AddAddress>}
         {
-            addressForm && <AddressForm closeAddressForm={changeAddressFormState} changeLoading={props.changeLoading} isAddressEmpty={props.addresses.length===0}/>
+            addressForm && <AddressForm closeAddressForm={changeAddressFormState} changeLoading={props.changeLoading} isAddressEmpty={props.addresses.length===0} setDefaultAddress={addAddressData}/>
         }
         {addressList.map((address,index)=>{
           if (address._id!=selectedAddress)

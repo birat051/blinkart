@@ -1,7 +1,9 @@
+import { AddAddress } from "@/components/ManageAddresses/ManageAddresses.style";
 import Link from "next/link";
 import styled from "styled-components";
 
 export const CartContainer=styled.div`
+    position: relative;
     display: flex;
     flex-direction: row;
     min-height: 80vh;
@@ -223,4 +225,55 @@ export const PriceColumnDivider=styled.div`
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
     border-bottom: 0.5px dotted grey;
+`
+
+export const CartAddressContainer = styled(AddAddress)`
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500&family=Noto+Sans:wght@400;500&display=swap');
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    div{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        div{
+            display: block;
+            flex: 3;
+            h1{
+                font-family: 'Noto Sans',sans-serif;
+                font-weight: 400;
+                font-size: 0.75em;
+                color: grey;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                margin-top: 0.5rem;
+            }
+            p{
+                font-family: 'Noto Sans',sans-serif;
+                font-weight: 500;
+                font-size: 0.9em;
+                color: black;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                span{
+                    font-weight: 400;
+                    font-size: 0.8em;
+                }
+            }
+        }
+        button{
+            background-color: white;
+            flex: 1;
+            font-family: 'Inter',sans-serif;
+            font-size: 0.75em;
+            font-weight: 500;
+            color: #2872F1;
+            border: 0.2px solid grey;
+            border-radius: 2px;
+            padding: 0.5rem;
+            cursor: pointer;
+        }
+    }
 `

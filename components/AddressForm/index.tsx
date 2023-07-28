@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { indianStates } from '@/utils/constants';
 import { useSession } from 'next-auth/react';
 import { User } from 'next-auth';
+import { Address } from '@/models/address_model';
 
 
 export const AddressDetails=z.object({
@@ -26,7 +27,8 @@ interface CustomUser extends User {
 type addressFormProp={
     closeAddressForm: ()=>void,
     changeLoading: (value:boolean)=>void,
-    isAddressEmpty: boolean
+    isAddressEmpty: boolean,
+    setDefaultAddress?: (address:Address)=>void
 }
 
 function AddressForm(props:addressFormProp) {
@@ -54,7 +56,7 @@ function AddressForm(props:addressFormProp) {
         isDefault: props.isAddressEmpty?true:false,
         userId: (session?.user as CustomUser)?.id
     }
-    console.log('Data is: ',data)
+    // console.log('Data is: ',data)
     props.changeLoading(true)
     try{
         const response = await fetch('/api/address/insert', {
@@ -67,8 +69,14 @@ function AddressForm(props:addressFormProp) {
       console.log('Response is: ',response.body)
       if(response.status===201)
           {
+            const data=await response.json()
             reset()
             alert('Address has been successfully added');
+            if(props.setDefaultAddress!=null)
+            {
+              console.log('Setting address data: ',data)
+              props.setDefaultAddress(data)
+            }
           }
       else
       alert(response.body);
