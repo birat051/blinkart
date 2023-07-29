@@ -4,20 +4,24 @@ import { configureStore } from '@reduxjs/toolkit'
 import { CartState } from './actions/cartActions';
 import storage from 'redux-persist/lib/storage';
 import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistReducer, persistStore } from 'redux-persist';
+import { AddressState } from './actions/addressActions';
+import addressReducer from './reducers/addressReducer';
 
 export interface RootState {
   cart: CartState;
+  address: AddressState
 }
 
 const rootReducer = combineReducers<RootState>({
   cart: cartReducer,
+  address: addressReducer
 });
 
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist: ['cart'],
-  };
+    whitelist: ['cart','address'],
+};
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
@@ -29,7 +33,7 @@ export const store = configureStore({
           ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
         },
       }),
-  })
+})
 
 export const persistor = persistStore(store)
 

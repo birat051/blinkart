@@ -25,6 +25,7 @@ export const SET_CART_ITEMS = 'SET_CART_ITEMS';
 export const ADD_TO_CART = 'ADD_TO_CART';
 export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 export const REDUCE_ITEM_QUANTITY = 'REDUCE_ITEM_QUANTITY'; 
+export const CLEAR_CART='CLEAR_CART';
  
  // Action interfaces
   interface SetCartItemsAction {
@@ -46,9 +47,14 @@ export const REDUCE_ITEM_QUANTITY = 'REDUCE_ITEM_QUANTITY';
     type: typeof REDUCE_ITEM_QUANTITY;
     payload: string;
   }
+
+  interface ClearCartAction{
+    type: typeof CLEAR_CART;
+  }
   
   export type CartActionTypes =
     | SetCartItemsAction
     | AddToCartAction
     | RemoveFromCartAction
-    | ReduceItemQuantityAction;
+    | ReduceItemQuantityAction
+    | ClearCartAction;

@@ -1,5 +1,6 @@
 import {
     ADD_TO_CART,
+    CLEAR_CART,
     CartActionTypes,
     CartState,
     REDUCE_ITEM_QUANTITY,
@@ -46,7 +47,7 @@ import {
         return {
           ...state,
           items: state.items.filter(item => item.id !== action.payload),
-        };
+      };
       case REDUCE_ITEM_QUANTITY:
         return {
           ...state,
@@ -60,6 +61,11 @@ import {
             return item;
           }),
         };
+        case CLEAR_CART: 
+        return{
+          ...state,
+          items: []
+      }
       default:
         return state;
     }

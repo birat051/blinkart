@@ -16,6 +16,8 @@ import { CartAddressBackground } from '@/components/CartAddressModal/CartAddress
 import CartAddressModal from '@/components/CartAddressModal'
 import AddressForm from '@/components/AddressForm'
 import LoadingOverlayWrapper from 'react-loading-overlay-ts'
+import { SET_ADDRESS } from '@/stateManagement/actions/addressActions'
+import { useRouter } from 'next/router'
 
 
 type cartPropType={
@@ -33,11 +35,12 @@ function CartPage(props:cartPropType) {
   const [delivery, setdelivery] = useState(0)
   const [selectedAddress, setselectedAddress] = useState<Address | null>(null)
   const [showAddressPopup, setshowAddressPopup] = useState(false)
-  const [selectedAddressIndex, setselectedAddressIndex] = useState(0)
+  const [selectedAddressIndex, setselectedAddressIndex] = useState<number>(-1)
   const [addAddressForm, setaddAddressForm] = useState(false)
   const [isLoading, setisLoading] = useState(false)
   const [addressList, setaddressList] = useState<Address[]>(props.userAddresses)
   const dispatch= useDispatch()
+  const router=useRouter()
   // console.log('Cart items are: ',cartItems)
   const addQuantity=(item:CartItem)=>{
     dispatch(  {type: ADD_TO_CART,
@@ -86,6 +89,16 @@ function CartPage(props:cartPropType) {
     setaddressList(newList)
     setselectedAddress(value)
     setaddAddressForm(false)
+  }
+  const placeOrder=()=>{
+    if(selectedAddress===null)
+    {
+      alert('Select or add an address')
+      return
+    }
+    dispatch(  {type: SET_ADDRESS,
+      payload: selectedAddress})
+    router.push('/payment')
   }
   return (
     <LoadingOverlayWrapper active={isLoading}>
@@ -136,7 +149,7 @@ function CartPage(props:cartPropType) {
             )
           })}
           <PlaceOrderContainer>
-            <CustomButton height='40px' backgroundcolor='#FA651B' color='white' >PLACE ORDER</CustomButton>
+            <CustomButton height='40px' backgroundcolor='#FA651B' color='white' onClick={placeOrder}>PLACE ORDER</CustomButton>
           </PlaceOrderContainer>
         </CartColumn>
       }

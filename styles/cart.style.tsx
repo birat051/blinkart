@@ -274,6 +274,12 @@ export const CartAddressContainer = styled(AddAddress)`
             border-radius: 2px;
             padding: 0.5rem;
             cursor: pointer;
+            @media screen and (max-width: 600px){
+            margin-top: 1rem;
+            }
+        }     
+        @media screen and (max-width: 600px){
+            display:block;       
         }
     }
 `
