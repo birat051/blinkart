@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 
 type creditCardProp={
     price: number,
+    processPayment: (paymentMethod:string,creditCardNumber:string|null)=>void
 }
 
 export const CardDetails=z.object({
@@ -40,8 +41,8 @@ function CreditCardForm(props:creditCardProp) {
   const handleYearChange=(event: React.ChangeEvent<HTMLSelectElement>)=>{
     yearField.onChange(event.target.value)
   }
-  const handleFormSubmit=()=>{
-
+  const handleFormSubmit=(formValues:Record<string, any>)=>{
+    props.processPayment('Credit Card',formValues.creditCardNumber)
   }
   useEffect(() => {
     const yearList=[]

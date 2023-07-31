@@ -4,7 +4,6 @@ import { Product } from "./product_data_model";
 import { UserModel } from "./user_model";
 const { Schema,Model } = mongoose;
 
-
 const orderSchema = new Schema({
     userId: {
       type: Schema.Types.ObjectId,
@@ -75,6 +74,13 @@ export interface Order extends Document {
     paymentMethod: string;
     creditCardNumber: string | null;
     deliveryStatus: string;
+}
+
+export interface ProductOrder{
+  productId: string,
+  quantity: number,
+  price: number,
+  discount: number
 }
 
 const OrderModel: typeof Model<Order> =

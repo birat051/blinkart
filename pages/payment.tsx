@@ -1,12 +1,28 @@
 import { StyledRadioInput } from '@/components/AddressForm/AddressForm.style';
 import CreditCardForm from '@/components/CreditCardForm';
+import { Address } from '@/models/address_model';
+import { ProductOrder } from '@/models/order_model';
+import ProductDataModel, { Product } from '@/models/product_data_model';
+import OrderServices, { CreateOrderResponse } from '@/services/orderservices';
+import RouteHelper from '@/services/routerHelper';
+import { CLEAR_CART, CartItem } from '@/stateManagement/actions/cartActions';
 import { RootState } from '@/stateManagement/store';
 import { CartColumn, CartContainer, CartPriceColumn, PriceColumnDivider } from '@/styles/cart.style'
 import { PaymentOptionHeading, PaymentOptions } from '@/styles/payment.style';
 import { BuyNow } from '@/styles/product.style';
+import { NextApiResponse } from 'next';
+import { User } from 'next-auth';
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux';
+import LoadingOverlayWrapper from 'react-loading-overlay-ts';
+import { useDispatch, useSelector } from 'react-redux';
+
+interface CustomUser extends User {
+  id: string;
+}
+
+
 
 function PaymentPage() {
   const cartItems = useSelector((state: RootState) => state.cart);
@@ -14,8 +30,11 @@ function PaymentPage() {
   const [price, setprice] = useState(0)
   const [discount, setdiscount] = useState(0)
   const [delivery, setdelivery] = useState(0)
+  const [isLoading, setisLoading] = useState(false)
   const [selectedPayment, setselectedPayment] = useState<string | null>(null)
   const router=useRouter()
+  const { data: session } = useSession() 
+  const dispatch=useDispatch()
   useEffect(() => {
     if (cartItems.items.length === 0 || address===null) {
         router.push('/');
@@ -38,7 +57,37 @@ function PaymentPage() {
   const handlePaymentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setselectedPayment(event.target.value);
   };
+  const processPayment=async (paymentMethod:string,creditCardNumber:string|null)=>{
+    setisLoading(true)
+    const products:ProductOrder[]=[]
+    cartItems.items.forEach((item)=>{
+      const newProduct:ProductOrder={
+        productId: item.id,
+        quantity: item.quantity,
+        price: item.price,
+        discount: item.discount
+      }
+      products.push(newProduct)
+    })
+    if(address.address!=null)
+    {
+    const res:CreateOrderResponse=await OrderServices.createOrder((session?.user as CustomUser)?.id,products,address.address?._id,delivery,paymentMethod,creditCardNumber)
+    if (res.result===true)
+    {
+      dispatch(  {type: CLEAR_CART,
+      })
+      router.push(RouteHelper.getOrderConfirmationRoute(res.body?._id).toString())
+    }
+    else{
+      alert('Payment failed to process with error: '+res.message)
+    }
+    }
+    else
+    alert('No address has been selected')
+    setisLoading(false)
+  }
   return (
+    <LoadingOverlayWrapper active={isLoading}>
     <CartContainer>
         <CartColumn>
             <PaymentOptionHeading>
@@ -53,7 +102,7 @@ function PaymentPage() {
             />
             <div>
               <h1>Debit/Credit/ATM Card</h1>
-              {selectedPayment === 'creditcard' && <CreditCardForm price={price-discount} />}
+              {selectedPayment === 'creditcard' && <CreditCardForm price={price-discount} processPayment={processPayment}/>}
             </div>
             </PaymentOptions>
             <PaymentOptions className={selectedPayment === 'cod'?'active':''}>
@@ -65,7 +114,7 @@ function PaymentPage() {
             />
             <div>
             <h1>Cash on Delivery</h1>
-            {selectedPayment === 'cod' && <BuyNow>PAY ₹ {price-discount}</BuyNow>}
+            {selectedPayment === 'cod' && <BuyNow onClick={()=>processPayment('Cash on Delivery',null)}>PAY ₹ {price-discount}</BuyNow>}
             </div>
             </PaymentOptions>
         </CartColumn>
@@ -94,6 +143,7 @@ function PaymentPage() {
         </CartPriceColumn>
       }
     </CartContainer>
+    </LoadingOverlayWrapper>
   )
 }
 
