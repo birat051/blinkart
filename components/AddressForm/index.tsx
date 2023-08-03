@@ -32,7 +32,7 @@ type addressFormProp={
 }
 
 function AddressForm(props:addressFormProp) {
-    const { data: session, status } = useSession()
+    const { data: session } = useSession()
     const [selectedAddress, setSelectedAddress] = useState<string | null>(null);
     const handleAddressChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       setSelectedAddress(event.target.value);

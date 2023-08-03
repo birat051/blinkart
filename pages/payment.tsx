@@ -1,16 +1,13 @@
 import { StyledRadioInput } from '@/components/AddressForm/AddressForm.style';
 import CreditCardForm from '@/components/CreditCardForm';
-import { Address } from '@/models/address_model';
 import { ProductOrder } from '@/models/order_model';
-import ProductDataModel, { Product } from '@/models/product_data_model';
-import OrderServices, { CreateOrderResponse } from '@/services/orderservices';
+import OrderServices, { CreateOrderResponse } from '@/services/orderServices';
 import RouteHelper from '@/services/routerHelper';
-import { CLEAR_CART, CartItem } from '@/stateManagement/actions/cartActions';
+import { CLEAR_CART } from '@/stateManagement/actions/cartActions';
 import { RootState } from '@/stateManagement/store';
 import { CartColumn, CartContainer, CartPriceColumn, PriceColumnDivider } from '@/styles/cart.style'
 import { PaymentOptionHeading, PaymentOptions } from '@/styles/payment.style';
 import { BuyNow } from '@/styles/product.style';
-import { NextApiResponse } from 'next';
 import { User } from 'next-auth';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
@@ -21,8 +18,6 @@ import { useDispatch, useSelector } from 'react-redux';
 interface CustomUser extends User {
   id: string;
 }
-
-
 
 function PaymentPage() {
   const cartItems = useSelector((state: RootState) => state.cart);
