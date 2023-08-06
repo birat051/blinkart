@@ -88,6 +88,10 @@ function ProfilePageForm(props:profileFormType) {
         lastName=data.name.split(' ')[-1]
         email=data.email
         mobileNumber=data.mobileNumber
+        clearNameInput()
+        clearEmailInput()
+        clearMobileInput()
+        
       }
   else
   {
