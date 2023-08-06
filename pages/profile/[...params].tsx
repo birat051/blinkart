@@ -1,9 +1,10 @@
 import ManageAddresses from '@/components/ManageAddresses'
 import ProfileLinkSection from '@/components/ProfileLinkSection'
 import ProfileNameDisplay from '@/components/ProfileNameDisplay'
+import ProfilePageForm from '@/components/ProfilePageForm'
 import AddressModel, { Address } from '@/models/address_model'
 import UserDataModel, { UserModel } from '@/models/user_model'
-import { ProfilePage, ProfilePageLeftColumn, ProfilePageRightColumn, ProfileSpacer } from '@/styles/profile.style'
+import { ProfilePage, ProfilePageLeftColumn, ProfileSpacer } from '@/styles/profile.style'
 import connectToDatabase from '@/utils/connectDB'
 import { GetServerSidePropsContext } from 'next'
 import { User } from 'next-auth'
@@ -24,17 +25,19 @@ type profilePropType={
 
 function Profile(props:profilePropType) {
   const [isLoading, setisLoading] = useState(false)
+  const name=props.user.name.split(' ')
   const changeLoading=(value:boolean)=>{
     setisLoading(value)
   }
   const router=useRouter()
   const {params=[]}=router.query
-  console.log('Params are: ',params)
+  // console.log('Params are: ',params)
+  
   return (
     <LoadingOverlayWrapper active={isLoading}>
     <ProfilePage>
         <Head>
-           {params[0]==='account' && <title>My Profile</title>}
+           {params[0]==='info' && <title>My Profile</title>}
            {params[0]==='addresses' && <title>Manage Addresses</title>} 
         </Head>
         <ProfileSpacer />
@@ -43,8 +46,7 @@ function Profile(props:profilePropType) {
         <ProfileLinkSection activeLink={params}/>
       </ProfilePageLeftColumn>
       {params[0]==='addresses' && <ManageAddresses addresses={props.addresses} changeLoading={changeLoading}/>}
-      {params[0]!='addresses' && <ProfilePageRightColumn>        
-      </ProfilePageRightColumn>}
+      {params[0]==='info' && <ProfilePageForm firstName={name[0]} lastName={name.length>0?name[-1]:''} mobileNumber={props.user.mobileNumber??''} emailAddress={props.user.email}/>}
       <ProfileSpacer />
     </ProfilePage>
     </LoadingOverlayWrapper>

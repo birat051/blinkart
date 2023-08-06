@@ -4,8 +4,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
 
 
+type OrderStatus = 'Ordered' | 'Shipped' | 'Out for Delivery' | 'Delivered'
+
 interface OrderStatusStepsProps {
-  activeStatus: string;
+  activeStatus: OrderStatus;
 }
 
 

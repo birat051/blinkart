@@ -20,7 +20,7 @@ export const AddressDetails=z.object({
     addressType: z.string().length(4)
 })
 
-interface CustomUser extends User {
+export interface CustomUser extends User {
     id: string;
 }
 

@@ -25,7 +25,7 @@ function SignupForm(props:formType) {
   const {register,handleSubmit,formState,reset}=useForm({resolver: zodResolver(UserDetails)})
   const {errors}=formState
   const handleOnSubmit=async (formValues:Record<string, any>)=>{
-  console.log('Form Values are',formValues)
+  // console.log('Form Values are',formValues)
   const url = '/api/signup'; // The URL of your signup API endpoint
   const data = {
     name: formValues.name,

@@ -28,7 +28,7 @@ function MenuLinkSection() {
                             <HorizontalDivider />
                         </DesktopLink>}
                         <li>
-                            <DropdownSection href="/profile/account">
+                            <DropdownSection href="/profile/info">
                             <GridIcon icon={faUser} width='15px' height='15px' color='#2974F1' gridcolumnstart={2} gridcolumnend={3}/>
                                 <StyledLinkText fontWeight={400} fontColor='black' fontFamily="'Noto Sans', sans-serif" gridcolumnstart={3} gridcolumnend={4}>
                                     My Account
