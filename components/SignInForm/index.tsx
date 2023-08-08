@@ -18,7 +18,7 @@ const UserDetails=z.object({
 
 function SignInForm(props:formType) {
   const router=useRouter()
-  const {register,handleSubmit,formState,reset}=useForm({resolver: zodResolver(UserDetails)})
+  const {register,handleSubmit,formState}=useForm({resolver: zodResolver(UserDetails)})
   const {errors}=formState
   const handleOnSubmit=async (formValues:Record<string, any>)=>{
     props.changeIsLoading(true)

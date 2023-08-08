@@ -19,6 +19,9 @@ export const BannerContainer=styled.div`
     margin-top: 2rem;
     margin-bottom: 2rem;
     cursor: pointer;
+    ::-webkit-scrollbar{
+        display: none;
+    }
     @media screen and (max-width: 600px){
         height: 150px;
     }

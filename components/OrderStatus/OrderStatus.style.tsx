@@ -2,12 +2,16 @@ import styled from "styled-components";
 
 export const OrderStatusContainer=styled.div`
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;500&display=swap');
-    width: 300px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
     ul{
         display: flex;
         justify-content: space-between;
         list-style:none;
         position: relative;
+        width: 100%;
+        max-width: 400px;
     }
 `
 

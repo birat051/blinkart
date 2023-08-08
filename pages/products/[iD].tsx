@@ -15,6 +15,7 @@ import ReviewSection from '@/components/ReviewSection';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/stateManagement/store';
 import { ADD_TO_CART, CartItem } from '@/stateManagement/actions/cartActions';
+import Head from 'next/head';
 
 type productPageProp= {
     product: Product,
@@ -70,6 +71,9 @@ function ProductPage(props: productPageProp) {
   }
   return (
     <ProductPageContainer>
+       <Head>
+          <title>Blinkart: {props.product.name}</title>
+        </Head>
       <ProductColumnLeft>
       <ProductImageContainer>
         <BannerNav className='left'>

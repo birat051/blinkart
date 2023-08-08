@@ -13,7 +13,7 @@ export const AppStyle=styled.div`
     margin-right: 2rem; */
     ::-webkit-scrollbar {
     display: none;
-  }
+    }
   @media screen and (max-width:800px){
     /* margin-left: 1rem;
     margin-right: 1rem; */

@@ -23,10 +23,11 @@ function LoginButton() {
       router.push('/login');
     }
   };
+
   return (
     <MenuContainer onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
         {status==="unauthenticated" && <CustomButton backgroundcolor='white' color='rgb(41,116,241)' onClick={handleLoginClick}>Login</CustomButton>}
-        {status==="authenticated" && session && <CustomButton backgroundcolor='white' color='rgb(41,116,241)' onClick={handleLoginClick}><span>{session?.user?.name}</span></CustomButton>}
+        {status==="authenticated" && session && <CustomButton backgroundcolor='white' color='rgb(41,116,241)' onClick={()=>router.push('/profile/info')}><span>{session?.user?.name}</span></CustomButton>}
         {
             dropdownVisible && 
                 <DropDownMenu>

@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import AddressModel, { Address } from "./address_model";
+import  { Address } from "./address_model";
 import { Product } from "./product_data_model";
 import { UserModel } from "./user_model";
 const { Schema,Model } = mongoose;

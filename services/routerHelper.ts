@@ -11,4 +11,7 @@ export default class RouteHelper{
     static getOrderRoute=()=>{
         return '/account/orders'
     }
+    static getOrderDetailsRoute=(orderId:string)=>{
+        return `/orderdetails?orderId=${orderId}`
+    }
 }

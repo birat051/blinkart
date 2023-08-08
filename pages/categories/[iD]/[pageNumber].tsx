@@ -6,6 +6,7 @@ import { CategoryPageContainer, PageLink, PageNumberContainer, PageNumberRow, Pa
 import connectToDatabase from '@/utils/connectDB';
 import mongoose from 'mongoose';
 import { GetStaticPropsContext } from 'next';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react'
 import LoadingOverlayWrapper from 'react-loading-overlay-ts';
@@ -71,6 +72,9 @@ type productType={
     )
     return (
       <CategoryPageContainer>
+        <Head>
+          <title>Blinkart: {props.category.name}</title>
+        </Head>
         <ProductFilter category={props.category} parentCategory={props.parentCategory} minPrice={props.minPrice} maxPrice={props.maxPrice} applyPriceFilter={applyPriceFilter}/>
         <ProductColumn>
         {props.products.length > 0 && (

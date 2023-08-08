@@ -10,6 +10,7 @@ import { PaymentOptionHeading, PaymentOptions } from '@/styles/payment.style';
 import { BuyNow } from '@/styles/product.style';
 import { User } from 'next-auth';
 import { useSession } from 'next-auth/react';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
 import LoadingOverlayWrapper from 'react-loading-overlay-ts';
@@ -84,6 +85,9 @@ function PaymentPage() {
   return (
     <LoadingOverlayWrapper active={isLoading}>
     <CartContainer>
+        <Head>
+          <title>Cart</title>
+        </Head>
         <CartColumn>
             <PaymentOptionHeading>
                 <h1>Payment Options</h1>

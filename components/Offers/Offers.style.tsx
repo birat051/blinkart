@@ -13,6 +13,10 @@ export const OfferContainer=styled.div`
     justify-content: space-evenly;
     border: 0.5px solid grey;
     border-radius: 2px;
+    ::-webkit-scrollbar
+    {
+        display: none;
+    }
     h1{
         flex: 2;
         font-family: 'Inter',sans-serif;

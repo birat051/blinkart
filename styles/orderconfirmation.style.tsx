@@ -7,6 +7,9 @@ export const OrderConfirmation=styled.div`
     display: flex;
     flex-direction: column;
     align-items: stretch;
+    @media screen and (min-width: 900px){
+        align-items: center;
+    }
 `
 
 export const OrderPlacedContainer=styled.div`
@@ -19,6 +22,9 @@ export const OrderPlacedContainer=styled.div`
     margin-bottom: 1rem;
     @media screen and (max-width: 700px){
         flex-direction: column;
+    }
+    @media screen and (min-width: 900px){
+        width: 70%;
     }
 `
 
@@ -58,6 +64,9 @@ export const OrderPlacedLeftColumn=styled.div`
     @media screen and (max-width: 700px){
         border-right: none;
         border-bottom: 0.1px solid grey;
+    }
+    @media screen and (min-width: 900px){
+        width: 70%;
     }
 `
 
@@ -113,13 +122,13 @@ export const DeliveryAddressContainer=styled.div`
     border-radius: 2px;
     padding-bottom: 0.5rem;
     margin-bottom: 1rem;
-    h1{
+        h1{
         color: black;
         font-family: 'Noto Sans',sans-serif;
         font-size: 1em;
         font-weight: 600;
         margin-bottom: 0.5rem;
-    }
+        }
     h2{
         color: black;
         font-family: 'Noto Sans',sans-serif;
@@ -138,15 +147,22 @@ export const DeliveryAddressContainer=styled.div`
             font-size: 1em;
         }
     }
+    
+    @media screen and (min-width: 900px){
+        width: 70%;
+    }
 `
 
 export const OrderListView=styled.div`
     background-color: white;
     border-radius: 2px;
+    @media screen and (min-width: 900px){
+        width: 70%;
+    }
 `
 
 export const OrderView=styled.div`
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;600&family=Noto+Sans:wght@400;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;600;400&family=Noto+Sans:wght@400;600&display=swap');
     padding: 1rem;
     border-bottom: 0.1px solid grey;
     display: grid;
@@ -167,10 +183,16 @@ export const OrderView=styled.div`
         font-weight: 500;
         color: black;
         grid-column: 2/3;
-        /* white-space: nowrap;
+        white-space: nowrap;
         overflow: hidden;
-        text-overflow: ellipsis; */
+        text-overflow: ellipsis;
         cursor: pointer;
+        span{
+            display: none;
+            font-family: 'Inter',sans-serif;
+            font-size: 0.8em;
+            font-weight: 500;
+        }
     }
     h2{
         font-family: 'Inter',sans-serif;
@@ -180,16 +202,23 @@ export const OrderView=styled.div`
         flex: 1;
         text-align: left;
         grid-column: 4/5;
+        span{
+            font-size: 0.7em;
+            color: #398F3C;
+            font-weight: 400;
+        }
     }
-    p{
+    div{
         grid-column: 3/4;
         font-family: 'Noto Sans',sans-serif;
         font-size: 0.8em;
         font-weight: 400;
         color: black;
+        display: flex;
+        width: 100%;
     }
     @media screen and (max-width: 600px){
-        grid-template-columns: 1fr 2fr 1fr 2fr;
+        grid-template-columns: 1fr 2fr 2fr 2fr;
     }
 `
 

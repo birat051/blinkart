@@ -8,6 +8,7 @@ import { useRouter } from 'next/router'
 import SignupForm from '@/components/SignupForm'
 import LoadingOverlayWrapper from 'react-loading-overlay-ts'
 import { useSession } from 'next-auth/react'
+import Head from 'next/head'
 
 function LoginPage() {
   const router=useRouter()
@@ -37,6 +38,10 @@ function LoginPage() {
   return (
     <LoadingOverlayWrapper active={isLoading}>
     <AppStyle>
+    <Head>
+        {signup && <title>Signup</title>}
+        {!signup && <title>Signin</title>}
+      </Head>
       <LoginContainer>
         <LoginFeature>
           <div>

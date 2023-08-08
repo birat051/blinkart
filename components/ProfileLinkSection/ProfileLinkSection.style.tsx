@@ -20,11 +20,14 @@ export const ProfileLinkRow = styled.div.attrs((props) => ({
     padding-bottom: 0.5rem;
     &.active{
         background-color: #F5FBFF;
+        color: #2872F1;
     }
 
 `
 
-export const ProfileLinks= styled(Link)`
+export const ProfileLinks= styled(Link).attrs((props) => ({
+    className: props.className, 
+  }))`
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap');
     grid-column: 3/4;
     font-family: 'Inter',sans-serif;
@@ -36,6 +39,9 @@ export const ProfileLinks= styled(Link)`
     text-overflow: ellipsis;
     :hover{
         color: #2872F1;
+    }
+    &.active{
+        color: #2872F1; 
     }
 `
 

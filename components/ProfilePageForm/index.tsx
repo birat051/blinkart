@@ -22,7 +22,7 @@ type profileFormType={
 }
 
 function ProfilePageForm(props:profileFormType) {
-  const {handleSubmit,formState,reset,control}=useForm({resolver: zodResolver(UserDetails)})
+  const {handleSubmit,formState,control}=useForm({resolver: zodResolver(UserDetails)})
   const {errors}=formState
   let firstName=props.firstName || ''
   let lastName=props.lastName || ''
@@ -55,13 +55,15 @@ function ProfilePageForm(props:profileFormType) {
   const clearNameInput=()=>{
     firstNameField.onChange(firstName)
     lastNameField.onChange(lastName)
-    setNameInput(!isNameInput)
+    setNameInput(false)
   }
   const clearEmailInput=()=>{
-    setEmailInput(!isEmailInput)
+    emailField.onChange(email)
+    setEmailInput(false)
   }
   const clearMobileInput=()=>{
-    setMobileInput(!isMobileInput)
+    mobileField.onChange(mobileNumber)
+    setMobileInput(false)
   }
   const onFormSubmit=async ()=>{
     const data={
@@ -84,8 +86,8 @@ function ProfilePageForm(props:profileFormType) {
       {
         const data=await response.json()
         alert('User details has been successfully updated');
-        firstName=data.name.split(' ')[0]
-        lastName=data.name.split(' ')[-1]
+        firstName=firstNameField.value
+        lastName=lastNameField.value
         email=data.email
         mobileNumber=data.mobileNumber
         clearNameInput()

@@ -23,10 +23,10 @@ function ProfileLinkSection(props:profileLinkProp) {
   
   return (
     <ProfileLinkContainer>
-      <ProfileLinkRow>
+      <ProfileLinkRow className={currentLink==='/orders'?'active':''}>
         {/* <FontAwesomeIcon icon={faBagShopping} style={{color: '#2872F1',paddingRight: '15px'}} size='lg'/> */}
         <ProfileIcons icon={faBagShopping} />
-        <ProfileLinks href='/orders'>MY ORDERS</ProfileLinks>
+        <ProfileLinks href='/profile/orders' className={currentLink==='/orders'?'active':''}>MY ORDERS</ProfileLinks>
       </ProfileLinkRow>
       <ProfileLinkRow>
         {/* <FontAwesomeIcon icon={faBagShopping} style={{color: '#2872F1',paddingRight: '15px'}} size='lg'/> */}

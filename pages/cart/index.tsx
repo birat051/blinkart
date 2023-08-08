@@ -18,6 +18,7 @@ import AddressForm from '@/components/AddressForm'
 import LoadingOverlayWrapper from 'react-loading-overlay-ts'
 import { SET_ADDRESS } from '@/stateManagement/actions/addressActions'
 import { useRouter } from 'next/router'
+import Head from 'next/head'
 
 
 type cartPropType={
@@ -103,6 +104,9 @@ function CartPage(props:cartPropType) {
   return (
     <LoadingOverlayWrapper active={isLoading}>
     <CartContainer>
+      <Head>
+        <title>Cart</title>
+      </Head>
       {showAddressPopup && <CartAddressBackground onClick={()=>changePopupValue(false)}/>}
       {showAddressPopup && <CartAddressModal addressList={addressList} selectedIndex={selectedAddressIndex} changeIndex={changeAddressIndex}/>}
       {cartItems.items.length===0 && 
