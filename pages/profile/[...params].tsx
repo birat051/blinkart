@@ -38,6 +38,9 @@ function Profile(props:profilePropType) {
   }
   const router=useRouter()
   const {params=[]}=router.query
+  const changeIsLoading=(value:boolean)=>{
+    setisLoading(value)
+  }
   // console.log('Params are: ',params)
   if(props.error)
   return (
@@ -60,7 +63,7 @@ function Profile(props:profilePropType) {
       </ProfilePageLeftColumn>
       {params[0]==='addresses' && <ManageAddresses addresses={props.addresses} changeLoading={changeLoading}/>}
       {params[0]==='info' && <ProfilePageForm firstName={name[0]} lastName={name.length>0?name[name.length-1]:''} mobileNumber={props.user.mobileNumber??''} emailAddress={props.user.email}/>}
-      {params[0]==='orders' && <OrderPageList orderList={props.orders} totalPages={props.totalPages}/>}
+      {params[0]==='orders' && <OrderPageList orderList={props.orders} totalPages={props.totalPages} changeIsLoading={changeIsLoading}/>}
       <ProfileSpacer />
     </ProfilePage>
     </LoadingOverlayWrapper>
@@ -75,9 +78,11 @@ export async function getServerSideProps(context: GetServerSidePropsContext){
     const user=await UserDataModel.findOne({_id: (session?.user as CustomUser)?.id})
     const orders=await OrderServices.getAllOrders(1,3,(session?.user as CustomUser)?.id)
     const totalOrders=await OrderModel.countDocuments({userId: (session?.user as CustomUser)?.id})
-    const totalPages=Math.floor(totalOrders/3)
+    const totalPages = Math.ceil(totalOrders / 3);
     // console.log('User is: ',user)
     // console.log('Got addresses: ',userAddresses)
+    console.log('Total orders are: ',totalOrders)
+    console.log('Total Pages are: ',totalPages)
     return {
         props: {
             addresses:JSON.parse(JSON.stringify(userAddresses)),

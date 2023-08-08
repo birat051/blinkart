@@ -2,11 +2,24 @@ import { OrderView } from "@/styles/orderconfirmation.style";
 import styled from "styled-components";
 
 export const OrderPageListView=styled.div`
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap');
     flex: 6;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: flex-start;
+    align-items: center;
+    button
+    {
+        color: rgb(41,116,241);
+        font-size: 0.8em;
+        padding: 0.5rem;
+        background-color: white;
+        font-family: 'Inter',sans-serif;
+        font-weight: 500;
+        border: none;
+        border-radius: 2px;
+        cursor: pointer;
+    }
 `
 
 export const OrderContainer= styled.div`
@@ -32,6 +45,10 @@ export const OrderElement=styled(OrderView)`
     }
     h2{
         font-weight: 400;
+        span{
+            font-weight: 500;
+            font-size: 0.8em;
+        }
     }
     border-bottom: none;
 `

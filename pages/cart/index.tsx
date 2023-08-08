@@ -19,9 +19,6 @@ import LoadingOverlayWrapper from 'react-loading-overlay-ts'
 import { SET_ADDRESS } from '@/stateManagement/actions/addressActions'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
-import { ProductOrder } from '@/models/order_model'
-import OrderServices, { CreateOrderResponse } from '@/services/orderServices'
-import RouteHelper from '@/services/routerHelper'
 
 
 type cartPropType={
