@@ -71,6 +71,7 @@ export const CartProductLink = styled(Link)`
 export const CartImageColumn=styled.div`
     display: flex;
     flex-direction: column;
+    align-items: center;
     flex: 2;
     img{
         width: 224px;
@@ -91,6 +92,7 @@ export const CartQuantity = styled.div`
     justify-content: space-around;
     align-items: center;
     color: grey;
+    width: 100%;
     h1{
         font-size: 1.4em;
         font-family: 'Inter',sans-serif;

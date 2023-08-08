@@ -30,7 +30,6 @@ export const OrderStatusElement=styled.div.attrs((props) => ({
     position: relative;
     color: grey;
     font-size: 0.6em;
-    z-index: 1;
     p{
     font-family: 'Inter',sans-serif;
     font-weight: 500;
@@ -43,7 +42,7 @@ export const OrderStatusElement=styled.div.attrs((props) => ({
         height: 2px;
         background-color: grey;
         width: 100%;
-        z-index: 2;
+        z-index: 1;
     }
     &.active{
         color: #24A440;

@@ -22,7 +22,10 @@ interface CustomUser extends User {
 
 function PaymentPage() {
   const cartItems = useSelector((state: RootState) => state.cart);
-  const address = useSelector((state: RootState) => state.address);
+  // console.log('Got cart items: ',cartItems)
+  const address = useSelector((state: RootState) => state.address.address);
+  // const address = useSelector((state: RootState) => state.address.address);
+  console.log('Got address: ',address?._id)
   const [price, setprice] = useState(0)
   const [discount, setdiscount] = useState(0)
   const [delivery, setdelivery] = useState(0)
@@ -32,7 +35,7 @@ function PaymentPage() {
   const { data: session } = useSession() 
   const dispatch=useDispatch()
   useEffect(() => {
-    if (cartItems.items.length === 0 || address===null) {
+    if (cartItems.items.length === 0 ) {
         router.push('/');
         return;
     }
@@ -65,18 +68,36 @@ function PaymentPage() {
       }
       products.push(newProduct)
     })
-    if(address.address!=null)
+    if(address!=null)
     {
-    const res:CreateOrderResponse=await OrderServices.createOrder((session?.user as CustomUser)?.id,products,address.address?._id,delivery,paymentMethod,creditCardNumber)
-    if (res.result===true)
-    {
-      dispatch(  {type: CLEAR_CART,
-      })
-      router.push(RouteHelper.getOrderConfirmationRoute(res.body?._id).toString())
+      const userId=(session?.user as CustomUser)?.id
+      const shippingAddress=address._id
+      const body={
+        userId,
+        products,
+        shippingAddress,
+        deliveryFees:delivery,
+        paymentMethod,
+        creditCardNumber,
     }
-    else{
-      alert('Payment failed to process with error: '+res.message)
-    }
+      const res= await fetch('/api/order/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+      });
+      const data= await res.json()
+      if(res.status===201)
+      {
+           dispatch(  {type: CLEAR_CART,
+            })
+          router.push(RouteHelper.getOrderConfirmationRoute(data?._id).toString())
+      }
+          else{
+
+        alert('Payment failed to process with error: '+ data)
+      }
     }
     else
     alert('No address has been selected')
@@ -86,7 +107,7 @@ function PaymentPage() {
     <LoadingOverlayWrapper active={isLoading}>
     <CartContainer>
         <Head>
-          <title>Cart</title>
+          <title>Payment Page</title>
         </Head>
         <CartColumn>
             <PaymentOptionHeading>

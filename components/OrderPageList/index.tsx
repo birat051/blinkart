@@ -1,15 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { OrderContainer, OrderElement, OrderPageListView } from './OrderPageList.style'
 import { OrderDetailsResponse, ProductDetails } from '@/services/orderServices'
 import { useRouter } from 'next/router'
 import RouteHelper from '@/services/routerHelper'
 
 type orderPageListProp={
-  orderList: OrderDetailsResponse[]
+  orderList: OrderDetailsResponse[],
+  totalPages: number
 }
 
 function OrderPageList(props: orderPageListProp) {
   const router=useRouter()
+  const [pageNumber, setpageNumber] = useState(1)
   const goToOrderDetails=(orderid:string)=>{
     router.push(RouteHelper.getOrderDetailsRoute(orderid))
   }
@@ -31,6 +33,7 @@ function OrderPageList(props: orderPageListProp) {
           </OrderContainer>
         )
       })}
+      {pageNumber<props.totalPages &&<button>Show More Orders</button>}
     </OrderPageListView>
   )
 }

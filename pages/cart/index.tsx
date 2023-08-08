@@ -4,13 +4,13 @@ import { CartAddressContainer, CartColumn, CartContainer, CartImageColumn, CartP
 import connectToDatabase from '@/utils/connectDB'
 import { GetServerSidePropsContext } from 'next'
 import { User } from 'next-auth'
-import { getSession } from 'next-auth/react'
+import { getSession, useSession } from 'next-auth/react'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Image from 'next/image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAdd, faCircleMinus, faCirclePlus } from '@fortawesome/free-solid-svg-icons'
-import { ADD_TO_CART, CartItem, REDUCE_ITEM_QUANTITY, REMOVE_FROM_CART } from '@/stateManagement/actions/cartActions'
+import { ADD_TO_CART, CLEAR_CART, CartItem, REDUCE_ITEM_QUANTITY, REMOVE_FROM_CART } from '@/stateManagement/actions/cartActions'
 import { CustomButton } from '@/styles/globals.style'
 import { CartAddressBackground } from '@/components/CartAddressModal/CartAddressModal.style'
 import CartAddressModal from '@/components/CartAddressModal'
@@ -19,6 +19,9 @@ import LoadingOverlayWrapper from 'react-loading-overlay-ts'
 import { SET_ADDRESS } from '@/stateManagement/actions/addressActions'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
+import { ProductOrder } from '@/models/order_model'
+import OrderServices, { CreateOrderResponse } from '@/services/orderServices'
+import RouteHelper from '@/services/routerHelper'
 
 
 type cartPropType={
@@ -42,6 +45,7 @@ function CartPage(props:cartPropType) {
   const [addressList, setaddressList] = useState<Address[]>(props.userAddresses)
   const dispatch= useDispatch()
   const router=useRouter()
+  const { data: session } = useSession() 
   // console.log('Cart items are: ',cartItems)
   const addQuantity=(item:CartItem)=>{
     dispatch(  {type: ADD_TO_CART,
@@ -100,6 +104,7 @@ function CartPage(props:cartPropType) {
     dispatch(  {type: SET_ADDRESS,
       payload: selectedAddress})
     router.push('/payment')
+    // console.log('Selected address is: ',address.address)
   }
   return (
     <LoadingOverlayWrapper active={isLoading}>

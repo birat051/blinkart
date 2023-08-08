@@ -46,7 +46,7 @@ const OrderStatus: React.FC<OrderStatusStepsProps> = ({ activeStatus }) => {
             return (
                 <OrderStatusLink key={index+'orderstatus'}>
                     <OrderStatusElement className={index<=activeStep?'active':''}>
-                    <FontAwesomeIcon icon={faCircle} style={{textAlign: 'left',marginBottom:'0.5rem'}}/>
+                    <FontAwesomeIcon icon={faCircle} style={{textAlign: 'left',marginBottom:'0.5rem',zIndex:2}}/>
                     <p>{step}</p>
                     <div />
                     </OrderStatusElement>

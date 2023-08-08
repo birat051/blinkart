@@ -4,6 +4,7 @@ import ProfileLinkSection from '@/components/ProfileLinkSection'
 import ProfileNameDisplay from '@/components/ProfileNameDisplay'
 import ProfilePageForm from '@/components/ProfilePageForm'
 import AddressModel, { Address } from '@/models/address_model'
+import OrderModel from '@/models/order_model'
 import UserDataModel, { UserModel } from '@/models/user_model'
 import OrderServices, { OrderDetailsResponse } from '@/services/orderServices'
 import { ProfilePage, ProfilePageLeftColumn, ProfileSpacer } from '@/styles/profile.style'
@@ -24,7 +25,9 @@ type profilePropType={
     addresses:Address[],
     user: UserModel,
     orders: OrderDetailsResponse[],
-    error?: string;
+    error?: string,
+    totalOrders: number,
+    totalPages: number
 }
 
 function Profile(props:profilePropType) {
@@ -57,7 +60,7 @@ function Profile(props:profilePropType) {
       </ProfilePageLeftColumn>
       {params[0]==='addresses' && <ManageAddresses addresses={props.addresses} changeLoading={changeLoading}/>}
       {params[0]==='info' && <ProfilePageForm firstName={name[0]} lastName={name.length>0?name[name.length-1]:''} mobileNumber={props.user.mobileNumber??''} emailAddress={props.user.email}/>}
-      {params[0]==='orders' && <OrderPageList orderList={props.orders}/>}
+      {params[0]==='orders' && <OrderPageList orderList={props.orders} totalPages={props.totalPages}/>}
       <ProfileSpacer />
     </ProfilePage>
     </LoadingOverlayWrapper>
@@ -71,13 +74,17 @@ export async function getServerSideProps(context: GetServerSidePropsContext){
     const userAddresses=await AddressModel.find({userId: (session?.user as CustomUser)?.id})
     const user=await UserDataModel.findOne({_id: (session?.user as CustomUser)?.id})
     const orders=await OrderServices.getAllOrders(1,3,(session?.user as CustomUser)?.id)
+    const totalOrders=await OrderModel.countDocuments({userId: (session?.user as CustomUser)?.id})
+    const totalPages=Math.floor(totalOrders/3)
     // console.log('User is: ',user)
     // console.log('Got addresses: ',userAddresses)
     return {
         props: {
             addresses:JSON.parse(JSON.stringify(userAddresses)),
             user:JSON.parse(JSON.stringify(user)),
-            orders: orders
+            orders: orders,
+            totalOrders,
+            totalPages
         }
     }
   }

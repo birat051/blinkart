@@ -38,7 +38,7 @@ const orderSchema = new Schema({
       ],
       shippingAddress: {
         type: Schema.Types.ObjectId,
-        ref: 'AddressModel',
+        ref: 'addresses',
         required: true,
     },
     deliveryFees: {
