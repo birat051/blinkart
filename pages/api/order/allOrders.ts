@@ -67,6 +67,6 @@ if(req.method==='GET')
   }
 }
 else{
-    res.status(403).json('Method not allowed');
+    res.status(405).json('Method not allowed');
 }
 }

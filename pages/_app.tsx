@@ -17,7 +17,7 @@ export default function App({ Component, pageProps: { session, ...pageProps }}: 
   <PersistGate loading={null} persistor={persistor}>
   <>
   <Head>
-  <title>Blinkart</title>
+  <title>Online shopping site for Mobiles,Electronics,Fashion and many more...</title>
   </Head>
   <PageHeader />
   <Component {...pageProps} />
