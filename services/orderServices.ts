@@ -62,7 +62,7 @@ export default class OrderServices{
     {
         try{
             await connectToDatabase()
-            const orders = await OrderModel.find({userId: userId})
+            const orders = await OrderModel.find({userId: userId}).sort({ orderDate: -1 })
             .skip((pageNumber - 1) * limit)
             .limit(limit);
             // console.log('Got orders: ',orders)

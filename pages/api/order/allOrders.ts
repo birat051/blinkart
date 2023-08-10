@@ -13,7 +13,6 @@ if(req.method==='GET')
   try {
     await connectToDatabase();
     const { pageNumber, limit, userId } = req.query;
-    // console.log('Limit is: ',limit)
     if(!pageNumber)
     {
         res.status(400).json('Page number is missing from query');
@@ -27,11 +26,11 @@ if(req.method==='GET')
         res.status(400).json('User id is missing from query');
     }
     // console.log('User id is: ',userId)
-    const orders: Order[] = await OrderModel.find({ userId: userId })
+    const orders: Order[] = await OrderModel.find({ userId: userId }).find({userId: userId}).sort({ orderDate: -1 })
       .skip((Number(pageNumber) - 1) * Number(limit))
       .limit(Number(limit));
     // console.log('Number of records skipped: ',pageNumber-1)
-    console.log('Got orders: ',orders)
+    // console.log('Got orders: ',orders)
     const formattedOrders: OrderDetailsResponse[] = await Promise.all(
       orders.map(async (order: Order) => {
         const address = await AddressModel.findById(order.shippingAddress);
