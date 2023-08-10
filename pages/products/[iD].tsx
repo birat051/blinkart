@@ -147,6 +147,7 @@ export async function getStaticPaths(){
 
 export async function getStaticProps(context:GetStaticPropsContext){
     const {params} = context
+    await connectToDatabase();
     const product = await ProductDataModel.findOne({_id: params?.iD})
     const seller = await Seller.findOne({_id: product.seller})
     const category = await ProductCategoryModel.findOne({_id: product.category})
@@ -167,11 +168,7 @@ export async function getStaticProps(context:GetStaticPropsContext){
     {
         parentCategory = await ProductCategoryModel.findOne({_id: category.parentCategory})
     }
-    let totalRating = 0;
-    reviews.forEach((review: ReviewModel) => {
-      totalRating += review.rating;
-    });
-    // Calculate the average rating
+    const totalRating = reviews.reduce((sum: number, review: ReviewModel) => sum + review.rating, 0);
     const averageRating = totalRating / totalReviews;
     const roundedAverageRating = averageRating.toFixed(1);
     return {

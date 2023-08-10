@@ -14,4 +14,7 @@ export default class RouteHelper{
     static getOrderDetailsRoute=(orderId:string)=>{
         return `/orderdetails?orderId=${orderId}`
     }
+    static getOfferRoute=(offerId:string)=>{
+        return `/offers/${offerId}`
+    }
 }

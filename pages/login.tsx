@@ -46,7 +46,7 @@ function LoginPage() {
         <LoginFeature>
           <div>
             {!signup && <h5>Login</h5>}
-            {signup && <h5>Looks like you're new here!</h5>}
+            {signup && <h5>Looks like you&apos;re new here!</h5>}
             {!signup && <p>Get access to your Orders, Wishlist and Recommendations</p>}
             {signup && <p>Signup with your email id to get started</p>}
           </div>

@@ -165,6 +165,13 @@ export async function getStaticPaths() {
     // console.log('Products are: ',products)
     // console.log('Price stats are: ',priceStats)
     // console.log('Got parentCategory: ',parentCategory)
+    let minPrice = 0;
+    let maxPrice = 0;
+
+    if (priceStats.length > 0) {
+      minPrice = priceStats[0].minPrice || 0;
+      maxPrice = priceStats[0].maxPrice || 0;
+    }
     return {
       props: {
         products: JSON.parse(JSON.stringify(products)),
@@ -172,8 +179,8 @@ export async function getStaticPaths() {
         totalPages: totalPages,
         category: JSON.parse(JSON.stringify(category)),
         parentCategory: JSON.parse(JSON.stringify(parentCategory)),
-        minPrice: priceStats[0].minPrice,
-        maxPrice: priceStats[0].maxPrice,
+        minPrice: minPrice,
+        maxPrice: maxPrice,
       },
     };
 }

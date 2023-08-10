@@ -1,8 +1,8 @@
 import { Product } from "@/models/product_data_model"
 import { PriceView, ProductContainer, ProductImage, ProductSpecification } from "./ProductView.style"
-import Image from "next/image"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
+import RouteHelper from "@/services/routerHelper"
 
 
 type productViewProp={
@@ -14,12 +14,13 @@ function ProductView(props:productViewProp) {
   const [price,setPrice]=useState(props.product.price)
   const router=useRouter()
   const goToProduct=()=>{
-    router.push(`/products/${props.product._id}`)
+    router.push(RouteHelper.getProductRoute(props.product._id))
   }
   useEffect(() => {
     if(props.product.discount && props.product.discount>0)
-      setPrice(Math.floor(price*(100-props.product.discount)/100))
-  }, [])
+    setPrice(Math.floor(props.product.price * (100 - props.product.discount) / 100));
+  }, [props.product.discount])
+  // console.log('Discount is: ',props.product.discount)
   return (
     <ProductContainer onClick={goToProduct}>
       <ProductImage>
@@ -33,7 +34,9 @@ function ProductView(props:productViewProp) {
       </ProductSpecification>
       <PriceView>
         <h2>₹ {price}</h2>
-        {props.product.discount && props.product.discount>0 && <p><span>{props.product.price}</span>{props.product.discount}% off</p>}
+        {props.product.discount && props.product.discount!==0 && <p><span>{Math.floor(props.product.price)}</span>
+        {props.product.discount}% off
+        </p>}
       </PriceView>
     </ProductContainer>
   )

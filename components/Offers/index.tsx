@@ -2,6 +2,7 @@ import { Offer } from '@/models/offer_model'
 import React from 'react'
 import { OfferBlock, OfferContainer, OfferList } from './Offers.style'
 import { useRouter } from 'next/router'
+import RouteHelper from '@/services/routerHelper'
 
 type offerPropType={
     offerName:string,
@@ -17,7 +18,7 @@ function Offers(props:offerPropType) {
       <OfferList>
         {props.offerList.map((element)=>{
             return (
-                <OfferBlock key={element._id} onClick={()=>router.push(`offers/${element._id}`)}>
+                <OfferBlock key={element._id} onClick={()=>router.push(RouteHelper.getOfferRoute(element._id))}>
                     <img src={element.categoryImageUrl} alt={`Offer Image for ${element.title}`}/>
                     <h1>{element.title}</h1>
                     {element.price> 0 && <h2>From {element.price}</h2>}
