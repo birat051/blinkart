@@ -72,7 +72,7 @@ function ProductPage(props: productPageProp) {
   return (
     <ProductPageContainer>
        <Head>
-          <title>Blinkart: {props.product.name}</title>
+          <title>{props.product.name}</title>
         </Head>
       <ProductColumnLeft>
       <ProductImageContainer>
