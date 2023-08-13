@@ -96,7 +96,7 @@ function PaymentPage() {
       }
           else{
 
-        alert('Payment failed to process with error: '+ data)
+        alert('Payment failed to process with error: '+ data.error)
       }
     }
     else

@@ -88,11 +88,11 @@ function ProductPage(props: productPageProp) {
         <FontAwesomeIcon icon={faChevronRight}/>
         </BannerNav>
       </ProductImageContainer>
-      <ProductButtonContainer>
+      {props.product.quantity>0 && <ProductButtonContainer>
           <AddToCart onClick={addToCart}><span><FontAwesomeIcon icon={faCartShopping}/></span>ADD TO CART</AddToCart>
           <div />
           <BuyNow onClick={buyNow}><span><FontAwesomeIcon icon={faBoltLightning}/></span>BUY NOW</BuyNow>
-      </ProductButtonContainer>
+      </ProductButtonContainer>}
       </ProductColumnLeft>
       <ProductDetailsContainer>
         <ProductLinkContainer>
@@ -103,11 +103,16 @@ function ProductPage(props: productPageProp) {
         </ProductLinkContainer>
         <h2>{props.product.name}</h2>
         {discount>0 && <h4>Extra ₹{discount} off</h4>}
-        <ProductPriceContainer>
+        {props.product.quantity>0 && <ProductPriceContainer>
           <h1>₹{discountedPrice}</h1>
           {discount>0 && <span>₹{Math.floor(props.product.price)}</span>}
           {discount>0 && <h4>{props.product.discount}% off</h4>}
-        </ProductPriceContainer>
+        </ProductPriceContainer>}
+        {
+          props.product.quantity<1 && <ProductPriceContainer>
+            <h2>Product is currently out of stock!</h2>
+          </ProductPriceContainer>
+        }
         <h5>Highlights</h5>
         <ul>
         {props.product.highlights.map((highlight)=>{
@@ -149,7 +154,8 @@ export async function getStaticProps(context:GetStaticPropsContext){
     const {params} = context
     await connectToDatabase();
     const product = await ProductDataModel.findOne({_id: params?.iD})
-    const seller = await Seller.findOne({_id: product.seller})
+    console.log('Product is: ',product)
+    const seller = await Seller.findOne({_id: product.seller.toString()})
     const category = await ProductCategoryModel.findOne({_id: product.category})
     const reviews=await ReviewDataModel.find({product:product._id})
     const totalReviews=await ReviewDataModel.countDocuments({product:product._id})
@@ -171,6 +177,7 @@ export async function getStaticProps(context:GetStaticPropsContext){
     const totalRating = reviews.reduce((sum: number, review: ReviewModel) => sum + review.rating, 0);
     const averageRating = totalRating / totalReviews;
     const roundedAverageRating = averageRating.toFixed(1);
+    console.log('Sellers are: ',seller)
     return {
         props: {
             product: JSON.parse(JSON.stringify(product)),

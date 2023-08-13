@@ -15,7 +15,8 @@ export interface Product extends Document
     highlights: string[],
     createdAt: Date,
     updatedAt: Date,
-    discount: number | null
+    discount: number | null,
+    quantity: number
 }
 
 const productDataSchema = new Schema({
@@ -61,6 +62,10 @@ const productDataSchema = new Schema({
         default: Date.now
     },
     discount: {
+      type: Number,
+      default: 0
+    },
+    quantity: {
       type: Number,
       default: 0
     }

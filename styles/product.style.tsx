@@ -30,6 +30,7 @@ export const ProductImage = styled.img.attrs((props) => ({
     display: flex;
     width: 100%;
     height: 100%;
+    max-height: 593px;
     transition: 0.5s ease-in-out;
     object-fit: contain;
     }
@@ -126,6 +127,12 @@ export const ProductPriceContainer = styled.div`
         font-weight: 600;
         color: black;
         padding-right: 8px;
+    }
+    h2{
+        color: red;
+        font-size: 1em;
+        font-family: 'Inter',sans-serif;
+        font-weight: 600;
     }
     span{
         font-family: 'Inter',sans-serif;

@@ -142,7 +142,8 @@ export async function getStaticPaths() {
     const { params } = context;
     await connectToDatabase();
     const page = parseInt(params?.pageNumber as string); // Parse the page number from the params
-    const products = await ProductDataModel.find({ category: params?.iD })
+    const products = await ProductDataModel.find({ category: params?.iD,
+      quantity: { $gt: 0 } })
       .skip((page - 1) * 5) // Skip the products on previous pages
       .limit(5); // Fetch a maximum of 5 products for the current page
     const totalProducts = await ProductDataModel.countDocuments({ category: params?.iD });
