@@ -31,6 +31,7 @@ export const OrderContainer= styled.div`
     justify-content: flex-start;
     margin-bottom: 1rem;
     border-radius: 2px;
+    width: 100%;
     cursor: pointer;
     :hover{
         box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
@@ -51,4 +52,5 @@ export const OrderElement=styled(OrderView)`
         }
     }
     border-bottom: none;
+    width: 100%;
 `

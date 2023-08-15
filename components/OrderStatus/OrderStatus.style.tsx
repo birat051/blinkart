@@ -60,6 +60,13 @@ export const OrderStatusElement=styled.div.attrs((props) => ({
         width: 100%;
     }
     }
+    &.canceled
+    {
+        color: red;
+        div{
+        background-color: red;
+        } 
+    }
 
 `
 

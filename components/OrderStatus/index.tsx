@@ -5,14 +5,15 @@ import { faCircle } from '@fortawesome/free-solid-svg-icons';
 
 
 export type OrderStatusValues = 'Ordered' | 'Shipped' | 'Out for Delivery' | 'Delivered'
+export type OrderCanceledValues = 'Ordered' | 'Canceled'
 
 interface OrderStatusStepsProps {
-  activeStatus: OrderStatusValues;
+  activeStatus: OrderStatusValues | OrderCanceledValues;
 }
 
 
 const OrderStatus: React.FC<OrderStatusStepsProps> = ({ activeStatus }) => {
-    const steps = ['Ordered', 'Shipped', 'Out for Delivery', 'Delivered'];
+    const steps = activeStatus!=='Canceled'?['Ordered', 'Shipped', 'Out for Delivery', 'Delivered']:['Ordered','Canceled'];
     const [activeStep, setactiveStep] = useState(0)
     useEffect(() => {
         steps.forEach((step,index)=>{
@@ -35,6 +36,14 @@ const OrderStatus: React.FC<OrderStatusStepsProps> = ({ activeStatus }) => {
                     </OrderStatusElement>
                 </OrderStatusLink>
             )
+            else if(index===steps.length-1 && activeStatus==='Canceled')
+            return <OrderStatusLink key={index+'orderstatus'}>
+                <OrderStatusElement className={'canceled'}>
+                    <FontAwesomeIcon icon={faCircle} style={{textAlign: 'left',marginBottom:'0.5rem'}}/>
+                    <p>{step}</p>
+                    <div />
+                    </OrderStatusElement>
+            </OrderStatusLink>
             else if(index===steps.length-1)
             return <OrderStatusLink key={index+'orderstatus'}>
                 <OrderStatusElement className={index<=activeStep?'active last-child':'last-child'}>
@@ -43,6 +52,7 @@ const OrderStatus: React.FC<OrderStatusStepsProps> = ({ activeStatus }) => {
                     <div />
                     </OrderStatusElement>
             </OrderStatusLink>
+           
             return (
                 <OrderStatusLink key={index+'orderstatus'}>
                     <OrderStatusElement className={index<=activeStep?'active':''}>
