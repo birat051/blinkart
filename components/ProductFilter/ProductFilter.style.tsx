@@ -46,7 +46,8 @@ export const FilterView = styled.div`
     div{
         display: flex;
         flex-direction: row;
-        align-items: baseline;
+        align-items: center;
+        justify-content: space-between;
     }
     input[type="range"]{
         accent-color: rgb(41,116,241);
@@ -57,8 +58,35 @@ export const FilterView = styled.div`
             color: rgb(41,116,241);
     }
     }
-   
+    input[type="checkbox"]
+    {
+        height: 14px;
+        width: 14px;
+    }
+    input[type="checkbox"]:checked
+    {
+        accent-color: rgb(41,116,241);
+    }
     border-bottom: 0.2px solid grey;
+    button{
+        font-family: 'Noto Sans',sans-serif;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: white;
+        background-color: rgb(41,116,241);
+        padding: 0.5rem;
+        border-radius: 2px;
+        border: none;
+        cursor: pointer;
+    }
+`
+
+export const ClearAllLink=styled(Link)`
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap');
+    font-family: 'Inter',sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: rgb(41,116,241);
 `
 
 export const CategoryNavLink= styled(Link)`

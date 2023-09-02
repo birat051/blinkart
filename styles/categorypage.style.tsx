@@ -87,26 +87,6 @@ export const PageSpacer = styled.div`
     flex: 2;
 `
 
-export const PageLink= styled(Link).attrs((props) => ({
-    className: props.className, 
-  }))`
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@600&display=swap');
-    color: black;
-    font-family: 'Noto Sans',sans-serif;
-    font-size: 0.8em;
-    font-weight: 600;
-    &.active{
-        color: white;
-        background-color: #2872F1;
-        border-radius: 50%;
-        height: 32px;
-        width: 32px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-`
-
 export const PageLinkButton= styled.button.attrs((props) => ({
     className: props.className, 
   }))`

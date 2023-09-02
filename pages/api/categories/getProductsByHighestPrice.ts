@@ -17,14 +17,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       await connectToDatabase();
       const productsPerPage = 5;
       const skip = (parseInt(pageNumber.toString()) - 1) * productsPerPage;
-      const filters: any = {
+      const filters: any = JSON.parse(includeOutofStock.toString())?{
         category: categoryId,
         price: { $lte: maxPrice },
+      }:{
+        category: categoryId,
+        price: { $lte: maxPrice },
+        quantity: {$gt: 0}
       };
-      
-      if (!includeOutofStock) {
-        filters.quantity = {$gt: 0};
-      }
 
       const products = await ProductDataModel.find(filters)
         .sort({ price: -1 }) // Sort by price in descending order (lowest to highest)

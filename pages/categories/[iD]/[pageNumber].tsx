@@ -2,7 +2,7 @@ import ProductFilter from '@/components/ProductFilter';
 import ProductView from '@/components/ProductView';
 import ProductCategoryModel, { ProductCategory } from '@/models/product_category_model';
 import ProductDataModel, { Product } from '@/models/product_data_model';
-import { CategoryPageContainer, FilterLinks, PageLink, PageLinkButton, PageNumberContainer, PageNumberRow, PageSpacer, ProductColumn, ProductListView, SortProductContainer } from '@/styles/categorypage.style';
+import { CategoryPageContainer, FilterLinks, PageLinkButton, PageNumberContainer, PageNumberRow, PageSpacer, ProductColumn, ProductListView, SortProductContainer } from '@/styles/categorypage.style';
 import connectToDatabase from '@/utils/connectDB';
 import mongoose from 'mongoose';
 import { GetStaticPropsContext } from 'next';
@@ -21,7 +21,7 @@ type productType={
     maxPrice: number
 }
 
-enum SortType {
+export enum SortType {
   Relevance = 'Relevance',
   SortLowtoHigh = 'Price -- Low to High',
   SortHightoLow = 'Price -- High to Low',
@@ -32,10 +32,10 @@ enum SortType {
     const router= useRouter()
     const currentPage = parseInt(props.pageNumber);
     const [filteredProducts, setFilteredProducts] = useState<Product[]>(props.products);
-    console.log('Filtered products is: ',filteredProducts)
+    // console.log('Filtered products is: ',filteredProducts)
     const sortOptions=[SortType.Relevance,SortType.SortLowtoHigh,SortType.SortHightoLow,SortType.NewestFirst]
     const [sortType, setsortType] = useState(router.query.sortBy??SortType.Relevance)
-    const includeOutOfStock = router.query.includeOutofStock??false;
+    const includeOutOfStock = router.query.includeOutOfStock??false;
     const sortBy = router.query.sortBy;
     const maxPrice= router.query.maxPrice??props.maxPrice
     const getPageNumbers = () => {
@@ -87,7 +87,7 @@ enum SortType {
     }
     const applyPriceFilter = (price: number) => {
       const filteredProducts = props.products.filter((product) => product.price <= price);
-      console.log('Filtered products are: ',filteredProducts)
+      // console.log('Filtered products are: ',filteredProducts)
       setFilteredProducts(filteredProducts);
     };
     useEffect(() => {
@@ -194,7 +194,6 @@ enum SortType {
         maxPrice: encodeURIComponent(maxPrice.toString()),
         includeOutOfStock: encodeURIComponent(includeOutOfStock.toString()),
       };
-      // router.push(sortBy,undefined,{shallow: true})
       router.push({
         pathname: `/categories/${props.category._id}/1`,
         query,
@@ -230,7 +229,7 @@ enum SortType {
         <Head>
           <title>Blinkart: {props.category.name}</title>
         </Head>
-        <ProductFilter category={props.category} parentCategory={props.parentCategory} minPrice={props.minPrice} maxPrice={props.maxPrice} applyPriceFilter={applyPriceFilter}/>
+        <ProductFilter category={props.category} parentCategory={props.parentCategory} minPrice={props.minPrice} maxPrice={props.maxPrice} applyPriceFilter={applyPriceFilter} isOutOfStockMarked={includeOutOfStock!=false?true:false}/>
         <ProductColumn>
         <SortProductContainer>
           <h1>Sort By</h1>
