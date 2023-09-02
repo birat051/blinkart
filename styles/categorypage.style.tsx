@@ -1,13 +1,27 @@
 import Link from "next/link";
 import styled from "styled-components";
 
-export const CategoryPageContainer= styled.div`
+export const CategoryPageContainer= styled.div.attrs((props) => ({
+    className: props.className, 
+  }))`
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap');
     display: flex;
     flex-direction: row;
     justify-content: stretch;
     align-items: flex-start;    
     min-height: 80vh;
     background-color: white;
+    &.empty{
+        justify-content: center;
+        align-items: center;
+    p
+    {
+        color: black;
+        font-family: 'Inter',sans-serif;
+        font-size: 0.8em;
+        font-weight: 400;
+    }
+    }
 `
 
 export const ProductListView =styled.div`
@@ -18,6 +32,7 @@ export const ProductListView =styled.div`
     display: flex;
     flex-direction: column;
     align-items: stretch;
+    margin-top: 0rem;
 `
 
 export const ProductColumn = styled.div`
@@ -90,4 +105,80 @@ export const PageLink= styled(Link).attrs((props) => ({
         align-items: center;
         justify-content: center;
     }
+`
+
+export const PageLinkButton= styled.button.attrs((props) => ({
+    className: props.className, 
+  }))`
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@600&display=swap');
+    color: black;
+    font-family: 'Noto Sans',sans-serif;
+    font-size: 0.8em;
+    font-weight: 600;
+    &.active{
+        color: white;
+        background-color: #2872F1;
+        border-radius: 50%;
+        height: 32px;
+        width: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+`
+export const SortProductContainer=styled.div`
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap');
+    display: flex;
+    justify-content: flex-start;
+    align-items: baseline;
+    padding-top: 0.5rem;
+    border: 0.1px solid grey;
+    margin: 0.5rem;
+    margin-bottom: 0rem;
+    border-bottom: none;
+    border-radius: 1px;
+    ul{
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        list-style-type: none;
+    }
+    h1{
+        font-family: 'Inter',sans-serif;
+        font-size: 0.8em;
+        font-weight: 600;
+        padding-bottom: 0.5rem;
+        color: black;
+        padding-right: 1rem;
+        padding-left: 1rem;
+    }
+`
+
+export const FilterLinks=styled.li.attrs((props) => ({
+    className: props.className, 
+  }))`
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+        padding-bottom: 0.25rem;
+        font-family: 'Inter',sans-serif;
+        font-size: 0.8em;
+        font-weight: 400;
+        padding-right: 1rem;
+        /* padding-left: 1rem; */
+        color: black;
+        cursor: pointer;
+        &.active
+        {
+            color: #2973F1;
+            padding-bottom: 0rem;
+            font-weight: 600;
+        }
+        &.active::after
+        {
+            content: '';
+            display: block;
+            width: 100%;
+            height: 3px;
+            background-color: #2973F1;
+            margin-top: 0.3rem;
+        }
 `

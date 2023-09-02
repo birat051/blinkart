@@ -2,13 +2,13 @@ import ProductFilter from '@/components/ProductFilter';
 import ProductView from '@/components/ProductView';
 import ProductCategoryModel, { ProductCategory } from '@/models/product_category_model';
 import ProductDataModel, { Product } from '@/models/product_data_model';
-import { CategoryPageContainer, PageLink, PageNumberContainer, PageNumberRow, PageSpacer, ProductColumn, ProductListView } from '@/styles/categorypage.style';
+import { CategoryPageContainer, FilterLinks, PageLink, PageLinkButton, PageNumberContainer, PageNumberRow, PageSpacer, ProductColumn, ProductListView, SortProductContainer } from '@/styles/categorypage.style';
 import connectToDatabase from '@/utils/connectDB';
 import mongoose from 'mongoose';
 import { GetStaticPropsContext } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import LoadingOverlayWrapper from 'react-loading-overlay-ts';
 
 type productType={
@@ -19,17 +19,29 @@ type productType={
     parentCategory: ProductCategory | null,
     minPrice: number,
     maxPrice: number
-  }
+}
+
+enum SortType {
+  Relevance = 'Relevance',
+  SortLowtoHigh = 'Price -- Low to High',
+  SortHightoLow = 'Price -- High to Low',
+  NewestFirst = 'Newest First'
+}
   
   function CategoryPage(props:productType) {
     const router= useRouter()
     const currentPage = parseInt(props.pageNumber);
     const [filteredProducts, setFilteredProducts] = useState<Product[]>(props.products);
+    console.log('Filtered products is: ',filteredProducts)
+    const sortOptions=[SortType.Relevance,SortType.SortLowtoHigh,SortType.SortHightoLow,SortType.NewestFirst]
+    const [sortType, setsortType] = useState(router.query.sortBy??SortType.Relevance)
+    const includeOutOfStock = router.query.includeOutofStock??false;
+    const sortBy = router.query.sortBy;
+    const maxPrice= router.query.maxPrice??props.maxPrice
     const getPageNumbers = () => {
         const totalPages = props.totalPages;
         const displayPages = 4; // Number of pages to display
         const pages: number[] = [];
-    
         let start = currentPage - Math.floor(displayPages / 2);
         let end = currentPage + Math.floor(displayPages / 2);
     
@@ -45,24 +57,161 @@ type productType={
             start = 1;
           }
         }
-    
         for (let i = start; i <= end; i++) {
           pages.push(i);
         }
-    
         return pages;
       };
     const goToNext=()=>{
-        router.push(`/categories/${router.query.iD}/${(currentPage+1).toString()}`)
+      const query = {
+        sortBy: sortBy,
+        maxPrice: encodeURIComponent(maxPrice.toString()),
+        includeOutOfStock: encodeURIComponent(includeOutOfStock.toString()),
+        };
+        router.push({
+          pathname: `/categories/${router.query.iD}/${(currentPage+1).toString()}`,
+          query,
+        },undefined,{shallow: false});
+        // router.push(`/categories/${router.query.iD}/${(currentPage+1).toString()}`)
     }
     const goToPrev=()=>{
-        router.push(`/categories/${router.query.iD}/${(currentPage-1).toString()}`)
+        const query = {
+        sortBy: sortBy,
+        maxPrice: encodeURIComponent(maxPrice.toString()),
+        includeOutOfStock: encodeURIComponent(includeOutOfStock.toString()),
+        };
+        router.push({
+          pathname: `/categories/${router.query.iD}/${(currentPage-1).toString()}`,
+          query,
+        },undefined,{shallow: false});
     }
     const applyPriceFilter = (price: number) => {
       const filteredProducts = props.products.filter((product) => product.price <= price);
       console.log('Filtered products are: ',filteredProducts)
       setFilteredProducts(filteredProducts);
     };
+    useEffect(() => {
+      async function getProductsByRelevance(){
+        console.log('Fetching products by relevance')
+        const response = await fetch(`/api/categories/getProductsByRelevance?categoryId=${props.category._id}&maxPrice=${maxPrice}&pageNumber=${props.pageNumber}&includeOutofStock=${includeOutOfStock}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+        });
+        const data=await response.json()
+        if(response.status===200)
+        {
+          // console.log('Data is: ',data)
+          setFilteredProducts(data)
+        }
+        else
+        alert(data.error)
+      }
+      async function getProductsByLowestPrice(){
+        console.log('Fetching products by lowest price')
+        const response = await fetch(`/api/categories/getProductsByLowPrice?categoryId=${props.category._id}&maxPrice=${maxPrice}&pageNumber=${props.pageNumber}&includeOutofStock=${includeOutOfStock}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+        });
+        const data=await response.json()
+        if(response.status===200)
+        {
+          // console.log('Data is: ',data)
+          setFilteredProducts(data)
+        }
+        else
+        alert(data.error)
+      }
+      async function getProductsByHighestPrice()
+      {
+        console.log('Fetching products by highest price')
+        const response = await fetch(`/api/categories/getProductsByHighestPrice?categoryId=${props.category._id}&maxPrice=${maxPrice}&pageNumber=${props.pageNumber}&includeOutofStock=${includeOutOfStock}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+        });
+        const data=await response.json()
+        if(response.status===200)
+        {
+          // console.log('Data is: ',data)
+          setFilteredProducts(data)
+        }
+        else
+        alert(data.error)
+      }
+      async function getProductByNewestFirst()
+      {
+        console.log('Fetching products by newest first')
+        const response = await fetch(`/api/categories/getProductsByNewestFirst?categoryId=${props.category._id}&maxPrice=${maxPrice}&pageNumber=${props.pageNumber}&includeOutofStock=${includeOutOfStock}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+        });
+        const data=await response.json()
+        if(response.status===200)
+        {
+          // console.log('Data is: ',data)
+          setFilteredProducts(data)
+        }
+        else
+        alert(data.error)
+      }
+      if(sortBy)
+      {
+        console.log('Sort by value is: ',sortBy)
+        console.log('Max price is: ',maxPrice)
+        console.log('Include out of stock is: ',includeOutOfStock)
+        switch (sortBy) {
+          case SortType.Relevance:
+            getProductsByRelevance();
+            break;
+          case SortType.SortHightoLow:
+            getProductsByHighestPrice();
+            break;
+          case SortType.SortLowtoHigh:
+            getProductsByLowestPrice();
+            break;
+          default: 
+          getProductByNewestFirst()
+        }
+      }
+      else
+      {
+      setFilteredProducts(props.products)
+      console.log('Using default product with no filters')
+      }
+    }, [includeOutOfStock,sortBy,maxPrice,props.pageNumber])
+    const onSortByChange=(sortBy:SortType)=>
+    {
+      setsortType(sortBy)
+      const query = {
+        sortBy: sortBy,
+        maxPrice: encodeURIComponent(maxPrice.toString()),
+        includeOutOfStock: encodeURIComponent(includeOutOfStock.toString()),
+      };
+      // router.push(sortBy,undefined,{shallow: true})
+      router.push({
+        pathname: `/categories/${props.category._id}/1`,
+        query,
+      });
+    }
+    const routeToPage=(pageNumber:number)=>{
+      const query = {
+        sortBy: sortBy,
+        maxPrice: encodeURIComponent(maxPrice.toString()),
+        includeOutOfStock: encodeURIComponent(includeOutOfStock.toString()),
+      };
+      const pathname=`/categories/${props.category._id}/${pageNumber}`
+      router.push({
+        pathname: pathname,
+        query,
+      });
+    }
     if(router.isFallback)
       return (
           <CategoryPageContainer>
@@ -70,6 +219,12 @@ type productType={
               </LoadingOverlayWrapper>
           </CategoryPageContainer>
     )
+    if(props.products.length===0)
+    return (
+      <CategoryPageContainer className='empty'>
+        <p>Uh oh! we have run out of products to show for this category</p>
+      </CategoryPageContainer>
+      )
     return (
       <CategoryPageContainer>
         <Head>
@@ -77,10 +232,22 @@ type productType={
         </Head>
         <ProductFilter category={props.category} parentCategory={props.parentCategory} minPrice={props.minPrice} maxPrice={props.maxPrice} applyPriceFilter={applyPriceFilter}/>
         <ProductColumn>
-        {props.products.length > 0 && (
+        <SortProductContainer>
+          <h1>Sort By</h1>
+          <ul>
+            {sortOptions.map((sort)=>{ 
+              return (
+                <FilterLinks key={sort} className={sortType===sort?'active':''} onClick={()=>onSortByChange(sort)}>
+                  {sort}
+                </FilterLinks>
+              )
+            })}
+          </ul>
+        </SortProductContainer>
+        {filteredProducts.length > 0 && (
           <ProductListView>
-            {props.products.map((product) => {
-              return <ProductView product={product} key={product._id} />;
+            {filteredProducts.map((product) => {
+              return <ProductView product={product} key={product._id} />
             })}
           </ProductListView>
         )}
@@ -91,14 +258,13 @@ type productType={
             <PageNumberContainer>
             {props.pageNumber!='1' && <button onClick={goToPrev}>PREVIOUS</button>}
             {getPageNumbers().map((pageNumber) => (
-              <PageLink
-                href={`/categories/${router.query.iD}/${pageNumber}`}
+              <PageLinkButton
+                onClick={()=>routeToPage(pageNumber)}
                 key={pageNumber}
                 className={pageNumber.toString() == props.pageNumber ? 'active' : ''}
-                passHref
               >
                 {pageNumber}
-              </PageLink>
+              </PageLinkButton>
             ))}
             {props.pageNumber<props.totalPages.toString() && <button onClick={goToNext}>NEXT</button>}
             </PageNumberContainer>
@@ -139,6 +305,7 @@ export async function getStaticPaths() {
   }
 
   export async function getStaticProps(context: GetStaticPropsContext) {
+    // console.log('Getting products')
     const { params } = context;
     await connectToDatabase();
     const page = parseInt(params?.pageNumber as string); // Parse the page number from the params
@@ -160,6 +327,7 @@ export async function getStaticPaths() {
           _id: null,
           minPrice: { $min: '$price' },
           maxPrice: { $max: '$price' },
+
         },
       },
     ]);
@@ -173,6 +341,7 @@ export async function getStaticPaths() {
       minPrice = priceStats[0].minPrice || 0;
       maxPrice = priceStats[0].maxPrice || 0;
     }
+    // console.log('Products are: ',products)
     return {
       props: {
         products: JSON.parse(JSON.stringify(products)),
@@ -183,6 +352,7 @@ export async function getStaticPaths() {
         minPrice: minPrice,
         maxPrice: maxPrice,
       },
+      revalidate: 600
     };
 }
 
