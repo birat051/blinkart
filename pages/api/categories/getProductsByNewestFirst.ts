@@ -31,8 +31,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         .sort({ createdAt: -1 }) // Sort by createdAt field in descending order (newest first)
         .skip(skip)
         .limit(productsPerPage);
-
-      return res.status(200).json(products);
+        const totalCount = await ProductDataModel.countDocuments(filters);
+        const totalPages = Math.ceil(totalCount / productsPerPage);
+        return res.status(200).json({ products, totalPages });
     } catch (error) {
       console.error('Error fetching product:', error);
       return res.status(500).json({ error: 'Unable to fetch products' });

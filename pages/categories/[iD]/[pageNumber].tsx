@@ -35,11 +35,12 @@ export enum SortType {
     // console.log('Filtered products is: ',filteredProducts)
     const sortOptions=[SortType.Relevance,SortType.SortLowtoHigh,SortType.SortHightoLow,SortType.NewestFirst]
     const [sortType, setsortType] = useState(router.query.sortBy??SortType.Relevance)
+    const [totalPageNumbers, settotalPages] = useState(props.totalPages)
     const includeOutOfStock = router.query.includeOutOfStock??false;
     const sortBy = router.query.sortBy;
     const maxPrice= router.query.maxPrice??props.maxPrice
     const getPageNumbers = () => {
-        const totalPages = props.totalPages;
+        const totalPages = totalPageNumbers;
         const displayPages = 4; // Number of pages to display
         const pages: number[] = [];
         let start = currentPage - Math.floor(displayPages / 2);
@@ -87,7 +88,6 @@ export enum SortType {
     }
     const applyPriceFilter = (price: number) => {
       const filteredProducts = props.products.filter((product) => product.price <= price);
-      // console.log('Filtered products are: ',filteredProducts)
       setFilteredProducts(filteredProducts);
     };
     useEffect(() => {
@@ -103,7 +103,8 @@ export enum SortType {
         if(response.status===200)
         {
           // console.log('Data is: ',data)
-          setFilteredProducts(data)
+          setFilteredProducts(data.products)
+          settotalPages(data.totalPages)
         }
         else
         alert(data.error)
@@ -120,7 +121,8 @@ export enum SortType {
         if(response.status===200)
         {
           // console.log('Data is: ',data)
-          setFilteredProducts(data)
+          setFilteredProducts(data.products)
+          settotalPages(data.totalPages)
         }
         else
         alert(data.error)
@@ -138,7 +140,8 @@ export enum SortType {
         if(response.status===200)
         {
           // console.log('Data is: ',data)
-          setFilteredProducts(data)
+          setFilteredProducts(data.products)
+          settotalPages(data.totalPages)
         }
         else
         alert(data.error)
@@ -156,7 +159,8 @@ export enum SortType {
         if(response.status===200)
         {
           // console.log('Data is: ',data)
-          setFilteredProducts(data)
+          setFilteredProducts(data.products)
+          settotalPages(data.totalPages)
         }
         else
         alert(data.error)
@@ -218,7 +222,7 @@ export enum SortType {
               </LoadingOverlayWrapper>
           </CategoryPageContainer>
     )
-    if(props.products.length===0)
+    if(filteredProducts.length===0)
     return (
       <CategoryPageContainer className='empty'>
         <p>Uh oh! we have run out of products to show for this category</p>
@@ -252,7 +256,7 @@ export enum SortType {
         )}
         <PageNumberRow>
             <p>
-                Page {props.pageNumber} of {props.totalPages.toString()}
+                Page {props.pageNumber} of {totalPageNumbers.toString()}
             </p>
             <PageNumberContainer>
             {props.pageNumber!='1' && <button onClick={goToPrev}>PREVIOUS</button>}
@@ -265,7 +269,7 @@ export enum SortType {
                 {pageNumber}
               </PageLinkButton>
             ))}
-            {props.pageNumber<props.totalPages.toString() && <button onClick={goToNext}>NEXT</button>}
+            {props.pageNumber<totalPageNumbers.toString() && <button onClick={goToNext}>NEXT</button>}
             </PageNumberContainer>
             <PageSpacer/>
         </PageNumberRow>

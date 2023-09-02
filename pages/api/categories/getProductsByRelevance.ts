@@ -2,9 +2,6 @@ import connectToDatabase from "@/utils/connectDB";
 import { NextApiRequest, NextApiResponse } from "next";
 import ProductDataModel from "@/models/product_data_model";
 
-
-
-
 export default async function handler(req:NextApiRequest,res:NextApiResponse)
 {
     if (req.method==='GET')
@@ -35,7 +32,9 @@ export default async function handler(req:NextApiRequest,res:NextApiResponse)
               const products = await ProductDataModel.find(filters)
                 .skip(skip)
                 .limit(productsPerPage)
-                return res.status(200).json(products);
+                const totalCount = await ProductDataModel.countDocuments(filters);
+                const totalPages = Math.ceil(totalCount / productsPerPage);
+                return res.status(200).json({ products, totalPages });
         }
         catch(error)
         {
