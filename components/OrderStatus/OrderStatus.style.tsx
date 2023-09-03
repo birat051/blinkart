@@ -13,6 +13,7 @@ export const OrderStatusContainer=styled.div`
         width: 100%;
         max-width: 400px;
     }
+    margin-bottom: 1rem;
 `
 
 export const OrderStatusLink=styled.li`

@@ -35,8 +35,8 @@ function OrderConfirmationPage(props:orderConfirmProp) {
   useEffect(() => {
     let price=0
     props.order.products.forEach((product)=>{
-        price=product.price+price
-        price=price-product.discount
+        price=(product.price*product.quantity)+price
+        price=price-(product.discount/100*product.price*product.quantity)
     })
     settotalPrice(price)
   }, [])

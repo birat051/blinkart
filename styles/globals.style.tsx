@@ -77,4 +77,17 @@ export const GridImage = styled(Image)`
   grid-row-end: ${(props:gridIconStyle)=>props.gridrowend??1};
   grid-row-start: ${(props:gridIconStyle)=>props.gridrowstart??1};
 `
-
+export const ErrorContainer=styled.div`
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap');
+  display: flex;
+  min-height: 80vh;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  p{
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 0.8em;
+    color: black;
+  }
+`

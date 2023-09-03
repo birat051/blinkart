@@ -10,11 +10,19 @@ import { DeliveryAddressContainer, OrderConfirmation, OrderListView } from '@/st
 import { useRouter } from 'next/router'
 import RouteHelper from '@/services/routerHelper'
 import OrderStatus, { OrderStatusValues } from '@/components/OrderStatus'
-import { OrderDetailsView, TotalPriceContainer } from '@/styles/orderdetails.style'
+import { OrderDetailsView, ProductNameContainer, ReviewProductLink, TotalPriceContainer } from '@/styles/orderdetails.style'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faStar } from '@fortawesome/free-solid-svg-icons'
 
+interface ProductReviewMap{
+  [productId: string]: boolean;
+}
 
+type OrderDetailsProp = orderConfirmProp & {
+  reviewStatusMap?: ProductReviewMap;
+};
 
-function OrderDetailPage(props:orderConfirmProp) {
+function OrderDetailPage(props:OrderDetailsProp) {
   const router=useRouter()
   const deliveryDate=new Date()
   const [totalPrice, settotalPrice] = useState(0)
@@ -46,9 +54,12 @@ function OrderDetailPage(props:orderConfirmProp) {
             {props.products.map((product:ProductDetails,index)=>{
                 return (
                     <OrderDetailsView key={product.productId}>
-                        <img src={product.imageUrl} />  
+                        <img src={product.imageUrl} />
+                        <ProductNameContainer>
                         <h1 onClick={()=>goToProducts(product.productId)}>{product.name}</h1>
-                        {index===0 && <OrderStatus activeStatus={props.order.deliveryStatus as OrderStatusValues}/>
+                        {props.order.deliveryStatus==='Delivered' && <ReviewProductLink href={`/review/post?productId=${product.productId}`}><FontAwesomeIcon icon={faStar} style={{marginRight:'5px'}}/>Rate and Review Product</ReviewProductLink>} 
+                         </ProductNameContainer>  
+                        {index===0 &&<OrderStatus activeStatus={props.order.deliveryStatus as OrderStatusValues}/>
                         }
                         {index!==0 && <div />}
                         <h2>₹ {Math.floor(product.price)*product.quantity}{product.discount>0 && <span>&nbsp; {product.discount} %off</span>}</h2>
@@ -80,6 +91,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext)
         },
       };
   }
+  
   // console.log('Got products: ',products)
   return {
   props: {
