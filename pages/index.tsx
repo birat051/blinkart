@@ -97,6 +97,7 @@ export async function getStaticProps()
       topOffers: JSON.parse(JSON.stringify(topoffers)),
       offerByCategory: offerMap
     },
+    revalidate: 600
   };
   }
   catch(error)
@@ -110,6 +111,7 @@ export async function getStaticProps()
     subcategories: {},
     topOffers: [],
     offerByCategory: {}
-   }   
+   },
+   revalidate: 600 
   }
 }
