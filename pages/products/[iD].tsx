@@ -188,7 +188,8 @@ export async function getStaticProps(context:GetStaticPropsContext){
             reviewUserMap: reviewUserMap,
             totalReviews: totalReviews,
             averageRating: roundedAverageRating
-    }
+    },
+    revalidate: 600
     }
 }
 

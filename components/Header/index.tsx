@@ -11,6 +11,7 @@ import MenuLinkSection from "../MenuSection"
 import { faUser } from "@fortawesome/free-solid-svg-icons"
 import { useRouter } from "next/router"
 import { useSession } from "next-auth/react"
+import CartIcon from "../CartIcon"
 
 function PageHeader() {
   const [menuVisible, setmenuVisible] = useState(false)
@@ -66,7 +67,7 @@ function PageHeader() {
         </DropDownLink>
         <li>
         <CartLink href='/cart'>
-        <StyledFontAwesomeIcon icon={faCartShopping}  width='18px' height='18px' color='white'/>
+        <CartIcon />
         <LinkHeader>Cart</LinkHeader>
         </CartLink>
         </li>
