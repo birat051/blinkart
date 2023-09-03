@@ -13,9 +13,16 @@ import OrderStatus, { OrderStatusValues } from '@/components/OrderStatus'
 import { OrderDetailsView, ProductNameContainer, ReviewProductLink, TotalPriceContainer } from '@/styles/orderdetails.style'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
+import ReviewDataModel from '@/models/product_review_model'
 
 interface ProductReviewMap{
   [productId: string]: boolean;
+}
+
+interface ProductReviewList
+{
+  id: string;
+  status: boolean;
 }
 
 type OrderDetailsProp = orderConfirmProp & {
@@ -57,7 +64,7 @@ function OrderDetailPage(props:OrderDetailsProp) {
                         <img src={product.imageUrl} />
                         <ProductNameContainer>
                         <h1 onClick={()=>goToProducts(product.productId)}>{product.name}</h1>
-                        {props.order.deliveryStatus==='Delivered' && <ReviewProductLink href={`/review/post?productId=${product.productId}`}><FontAwesomeIcon icon={faStar} style={{marginRight:'5px'}}/>Rate and Review Product</ReviewProductLink>} 
+                        {props.order.deliveryStatus==='Delivered' && props.reviewStatusMap && !props.reviewStatusMap[product.productId] && <ReviewProductLink href={`/review/post?productId=${product.productId}`}><FontAwesomeIcon icon={faStar} style={{marginRight:'5px'}}/>Rate and Review Product</ReviewProductLink>} 
                          </ProductNameContainer>  
                         {index===0 &&<OrderStatus activeStatus={props.order.deliveryStatus as OrderStatusValues}/>
                         }
@@ -91,13 +98,42 @@ export async function getServerSideProps(context: GetServerSidePropsContext)
         },
       };
   }
-  
+  if(order.deliveryStatus!=='Delivered' || !products)
+  return {
+    props: {
+        order,
+        address,
+        products
+    }
+  }
+  const reviewMap:ProductReviewMap={}
+  const reviewList = await Promise.all(
+    products?.map(async (product) => {
+      const review = await ReviewDataModel.findOne({ product: product.productId, user: (session?.user as CustomUser)?.id });
+      if (review) {
+        return {
+          id: product.productId,
+          status: true,
+        };
+      } else {
+        return {
+          id: product.productId,
+          status: false,
+        };
+      }
+    })
+  );
+  reviewList?.forEach(async (product)=>{
+    reviewMap[product.id]=product.status
+  })
   // console.log('Got products: ',products)
+  // console.log('Review map is: ',reviewMap)
   return {
   props: {
       order,
       address,
-      products
+      products,
+      reviewStatusMap:reviewMap
   }
   }
 }

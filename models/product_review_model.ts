@@ -20,8 +20,15 @@ const reviewSchema = new Schema({
     product: { type: mongoose.Schema.Types.ObjectId, ref: 'product', required: true },
     rating: { type: Number, required: true },
     comment: { type: String, required: true },
-    title: {type: String,required: true}
-    // Add other review-related fields as needed
+    title: {type: String,required: true},
+    createdAt: {
+      type: Date,
+      default: Date.now
+    },
+    updatedAt:{
+      type: Date,
+      default: Date.now
+    },
   }, { timestamps: true });
 
 const ReviewDataModel: typeof Model<ReviewModel> =

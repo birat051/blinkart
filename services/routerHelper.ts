@@ -9,7 +9,7 @@ export default class RouteHelper{
         return `/categories/${categoryId}/${pageNumber}`
     }
     static getOrderRoute=()=>{
-        return '/account/orders'
+        return '/profile/orders'
     }
     static getOrderDetailsRoute=(orderId:string)=>{
         return `/orderdetails?orderId=${orderId}`

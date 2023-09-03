@@ -35,7 +35,7 @@ function ReviewSection(props:ratingPropType) {
                     <div>
                         <h3>{props.reviewUser[review._id]}</h3>
                         {!review.createdAt && <h4>{new Date().toDateString()}</h4>}
-                        {review.createdAt && <h4>{review.createdAt.toDateString()}</h4>}
+                        {review.createdAt && <h4>{new Date(review.createdAt).toDateString()}</h4>}
                     </div>
                 </ReviewView>
             )
