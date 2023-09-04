@@ -27,7 +27,7 @@ function CartIcon() {
   return (
     <Stack spacing={2} direction='row' style={{marginRight: '5px'}}>
         <Badge badgeContent={quantity} color='error'>
-            <ShoppingCart />
+            <ShoppingCart style={{color: 'white'}}/>
         </Badge>
     </Stack>
   )
