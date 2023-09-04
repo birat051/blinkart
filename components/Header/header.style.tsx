@@ -36,7 +36,7 @@ export const Header=styled.header`
     display: flex;
     padding-left: 4rem;
     padding-right: 4rem;
-    justify-content: space-evenly;
+    justify-content: space-between;
     padding-top: 10px;
     padding-bottom: 10px;
     align-items: center;
@@ -48,7 +48,7 @@ export const Header=styled.header`
     display: none;
     }
 
-    @media screen and (max-width:900px)
+    @media screen and (max-width:1000px)
     {
         padding-top: 10px;
         padding-bottom: 10px;
@@ -84,10 +84,9 @@ export const HeaderDiv = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
-    flex:2;
     align-items: center;
-
-    @media screen and (max-width:900px){
+    flex:2;
+    @media screen and (max-width:1000px){
         grid-column-start: 2;
         grid-column-end: 3;
         justify-content: space-around;
@@ -104,14 +103,14 @@ export const ImageComponent=styled.div`
      justify-content: flex-start;
      align-items: center;
      /* margin-right: 1rem; */
-    @media screen and (max-width:900px){
+    @media screen and (max-width:1000px){
         flex: 4;
     }
 `
 
 export const MobileNav=styled.nav`
     display: none;
-    @media screen and (max-width:900px){
+    @media screen and (max-width:1000px){
     display: ${(props:navBarType)=>props.navBarOpen?'flex':'none'};
     width: 70%;
     flex-direction: column;
@@ -159,7 +158,7 @@ export const MobileNavHeader=styled.div`
 `
 
 export const DesktopLink=styled.li`
-    @media screen and (max-width:900px){
+    @media screen and (max-width:1000px){
         display: none;
     }
 `

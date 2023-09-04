@@ -4,7 +4,8 @@ import styled from "styled-components";
 export const SearchContainer=styled.div`
   position: relative;
   display: block;
-  @media screen and (max-width: 900px){
+  flex: 2;
+  @media screen and (max-width: 1000px){
       grid-row: 3;
       grid-column: 2/3;
       width: 100%;
@@ -12,7 +13,7 @@ export const SearchContainer=styled.div`
 `
 
 export const Search=styled.div`
-    width: 500px;
+    /* width: 500px; */
     padding: 0.5rem;
     padding-left: 1rem;
     display: flex;
@@ -23,7 +24,8 @@ export const Search=styled.div`
     border: 1px solid white;
     border-radius: 2px;
     position: relative;
-    @media screen and (max-width: 900px){
+    flex: 3;
+    @media screen and (max-width: 1000px){
       width: 100%;
       padding: 0rem;
     }

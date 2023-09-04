@@ -7,7 +7,7 @@ export const OrderConfirmation=styled.div`
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    @media screen and (min-width: 900px){
+    @media screen and (min-width: 1000px){
         align-items: center;
     }
 `
@@ -23,7 +23,7 @@ export const OrderPlacedContainer=styled.div`
     @media screen and (max-width: 700px){
         flex-direction: column;
     }
-    @media screen and (min-width: 900px){
+    @media screen and (min-width: 1000px){
         width: 70%;
     }
 `
@@ -65,7 +65,7 @@ export const OrderPlacedLeftColumn=styled.div`
         border-right: none;
         border-bottom: 0.1px solid grey;
     }
-    @media screen and (min-width: 900px){
+    @media screen and (min-width: 1000px){
         width: 70%;
     }
 `
@@ -148,7 +148,7 @@ export const DeliveryAddressContainer=styled.div`
         }
     }
     
-    @media screen and (min-width: 900px){
+    @media screen and (min-width: 1000px){
         width: 70%;
     }
 `
@@ -156,7 +156,7 @@ export const DeliveryAddressContainer=styled.div`
 export const OrderListView=styled.div`
     background-color: white;
     border-radius: 2px;
-    @media screen and (min-width: 900px){
+    @media screen and (min-width: 1000px){
         width: 70%;
     }
 `
