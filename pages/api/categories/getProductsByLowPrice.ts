@@ -20,10 +20,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       
       const filters: any = JSON.parse(includeOutofStock.toString())?{
         category: categoryId,
-        price: { $lte: maxPrice },
+        price: { $lte: parseInt(maxPrice.toString()) },
       }:{
         category: categoryId,
-        price: { $lte: maxPrice },
+        price: { $lte: parseInt(maxPrice.toString()) },
         quantity: {$gt: 0}
       };
 
