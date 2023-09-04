@@ -21,6 +21,7 @@ function CartIcon() {
             itemquantity=itemquantity+item.quantity
         })
     }
+    // console.log('Item quantity is: ',itemquantity)
     setquantity(itemquantity)
   }, [cartItems.items])
   return (
