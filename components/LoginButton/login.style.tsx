@@ -18,6 +18,9 @@ type styledTextProp={
 export const MenuContainer=styled.div`
   position: relative;
   display: inline-block;
+  @media screen and (max-width: 900px){
+    display: none;
+  }
 `
 
 export const MenuLink=styled.ul`
@@ -41,7 +44,7 @@ export const DropDownMenu=styled.div`
     border-radius: 2px;
     box-shadow: 1px 1px grey;
 
-    @media screen and (max-width: 800px) {
+    @media screen and (max-width: 900px) {
       display: none;
   }
 `

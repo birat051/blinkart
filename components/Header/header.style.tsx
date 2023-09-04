@@ -36,7 +36,7 @@ export const Header=styled.header`
     display: flex;
     padding-left: 4rem;
     padding-right: 4rem;
-    justify-content: space-between;
+    justify-content: space-evenly;
     padding-top: 10px;
     padding-bottom: 10px;
     align-items: center;
@@ -48,7 +48,7 @@ export const Header=styled.header`
     display: none;
     }
 
-    @media screen and (max-width:800px)
+    @media screen and (max-width:900px)
     {
         padding-top: 10px;
         padding-bottom: 10px;
@@ -56,8 +56,10 @@ export const Header=styled.header`
         padding-right: 0rem; 
         height: 80px;
         display: grid;
-        grid-template-columns: 1fr 7fr 5fr 1fr;
+        grid-template-columns: 1fr 9fr 3fr 1fr;
+        /* grid-template-rows: 1fr 2fr 2fr 1fr; */
         grid-template-rows: 1fr 2fr 2fr 1fr;
+        grid-row-gap: 0.25rem;
     }
 `
 
@@ -85,7 +87,7 @@ export const HeaderDiv = styled.div`
     flex:2;
     align-items: center;
 
-    @media screen and (max-width:800px){
+    @media screen and (max-width:900px){
         grid-column-start: 2;
         grid-column-end: 3;
         justify-content: space-around;
@@ -102,14 +104,14 @@ export const ImageComponent=styled.div`
      justify-content: flex-start;
      align-items: center;
      /* margin-right: 1rem; */
-    @media screen and (max-width:800px){
+    @media screen and (max-width:900px){
         flex: 4;
     }
 `
 
 export const MobileNav=styled.nav`
     display: none;
-    @media screen and (max-width:800px){
+    @media screen and (max-width:900px){
     display: ${(props:navBarType)=>props.navBarOpen?'flex':'none'};
     width: 70%;
     flex-direction: column;
@@ -157,7 +159,7 @@ export const MobileNavHeader=styled.div`
 `
 
 export const DesktopLink=styled.li`
-    @media screen and (max-width:800px){
+    @media screen and (max-width:900px){
         display: none;
     }
 `

@@ -19,19 +19,12 @@ interface ProductReviewMap{
   [productId: string]: boolean;
 }
 
-interface ProductReviewList
-{
-  id: string;
-  status: boolean;
-}
-
 type OrderDetailsProp = orderConfirmProp & {
   reviewStatusMap?: ProductReviewMap;
 };
 
 function OrderDetailPage(props:OrderDetailsProp) {
   const router=useRouter()
-  const deliveryDate=new Date()
   const [totalPrice, settotalPrice] = useState(0)
   const goToProducts=(productId:string)=>{
     router.push(RouteHelper.getProductRoute(productId))

@@ -59,7 +59,7 @@ export const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
   flex: 1;
   display: ${(props:iconStyle)=>props.display??'block'};
 
-  @media screen and (max-width:800px){
+  @media screen and (max-width:900px){
    display : block;
   }
 `;

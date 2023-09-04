@@ -117,7 +117,9 @@ export const SortProductContainer=styled.div`
     margin-bottom: 0rem;
     border-bottom: none;
     border-radius: 1px;
+    overflow-x: scroll;
     ul{
+        overflow-x: scroll;
         display: flex;
         justify-content: flex-start;
         align-items: flex-start;

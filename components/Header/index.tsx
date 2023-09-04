@@ -58,8 +58,8 @@ function PageHeader() {
     <ImageComponent>
     <Image src={img} alt='Blinkart logo' height='25' onClick={()=>router.push('/')} style={{cursor: 'pointer'}} priority={true}/>
     </ImageComponent>
-    <SearchBar onSearch={onSearch}/>
     </HeaderDiv>
+    <SearchBar onSearch={onSearch}/>
     <Navigation>
       <UnorderedLink>
         <DropDownLink>

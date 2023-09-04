@@ -6,6 +6,9 @@ import {useForm} from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {z} from "zod"
 import { useRouter } from 'next/router'
+import { useDispatch } from 'react-redux'
+import { CLEAR_CART } from '@/stateManagement/actions/cartActions'
+
 
 type formType={
   changeIsLoading: (value:boolean)=>void
@@ -20,6 +23,7 @@ function SignInForm(props:formType) {
   const router=useRouter()
   const {register,handleSubmit,formState}=useForm({resolver: zodResolver(UserDetails)})
   const {errors}=formState
+  const dispatch=useDispatch()
   const handleOnSubmit=async (formValues:Record<string, any>)=>{
     props.changeIsLoading(true)
     const res= await signIn("credentials",{
@@ -34,6 +38,9 @@ function SignInForm(props:formType) {
     }
     else
     {
+      dispatch({
+        type: CLEAR_CART,
+      });
       router.push('/')
     }
   }

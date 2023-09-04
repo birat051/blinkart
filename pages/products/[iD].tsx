@@ -88,11 +88,12 @@ function ProductPage(props: productPageProp) {
         <FontAwesomeIcon icon={faChevronRight}/>
         </BannerNav>
       </ProductImageContainer>
-      {props.product.quantity>0 && <ProductButtonContainer>
+      {/* {props.product.quantity>0 && <ProductButtonContainer>
           <AddToCart onClick={addToCart}><span><FontAwesomeIcon icon={faCartShopping}/></span>ADD TO CART</AddToCart>
           <div />
           <BuyNow onClick={buyNow}><span><FontAwesomeIcon icon={faBoltLightning}/></span>BUY NOW</BuyNow>
-      </ProductButtonContainer>}
+      </ProductButtonContainer>} */}
+      {props.product.quantity>0 && <AddToCart onClick={addToCart}><span><FontAwesomeIcon icon={faCartShopping}/></span>ADD TO CART</AddToCart>}
       </ProductColumnLeft>
       <ProductDetailsContainer>
         <ProductLinkContainer>

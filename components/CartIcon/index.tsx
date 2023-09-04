@@ -3,13 +3,19 @@ import {Stack,Badge} from "@mui/material"
 import { ShoppingCart } from '@mui/icons-material'
 import { RootState } from '@/stateManagement/store';
 import { useSelector } from 'react-redux';
+import { useSession } from 'next-auth/react';
 
 function CartIcon() {
   const cartItems = useSelector((state: RootState) => state.cart);
   const [quantity, setquantity] = useState(0)
+  const { data: session, status } = useSession()
   useEffect(() => {
     let itemquantity=0
-    if(cartItems.items.length>0)
+    if(status!=='authenticated')
+    {
+      return
+    }
+    else if(cartItems.items.length>0)
     {
         cartItems.items.forEach((item)=>{
             itemquantity=itemquantity+item.quantity

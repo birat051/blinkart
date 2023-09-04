@@ -25,6 +25,7 @@ export const ProfilePageLeftColumn=styled.div`
     @media screen and (max-width: 600px){
         margin-bottom: 1rem;
         margin-right: 0px;
+        flex: 1;
     }
 `
 

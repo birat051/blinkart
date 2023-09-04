@@ -4,6 +4,11 @@ import styled from "styled-components";
 export const SearchContainer=styled.div`
   position: relative;
   display: block;
+  @media screen and (max-width: 900px){
+      grid-row: 3;
+      grid-column: 2/3;
+      width: 100%;
+    }
 `
 
 export const Search=styled.div`
@@ -19,7 +24,8 @@ export const Search=styled.div`
     border-radius: 2px;
     position: relative;
     @media screen and (max-width: 900px){
-      display: none;
+      width: 100%;
+      padding: 0rem;
     }
 `
 
