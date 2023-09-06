@@ -37,7 +37,7 @@ export const CustomButton = styled.button`
     cursor: pointer;
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
     min-width: 120px;
-    border-radius: 1px;
+    border-radius: 2px;
     white-space: nowrap;
     span{
     overflow: hidden;

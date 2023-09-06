@@ -8,7 +8,7 @@ export const FilterContainer=styled.div`
     justify-content: flex-start;
     align-items: stretch;
     margin: 0.5rem;
-    border-radius: 1px;
+    border-radius: 2px;
     border: 0.2px solid grey;
     border-bottom: none;
     margin-right: 0px;

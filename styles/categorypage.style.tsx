@@ -27,7 +27,7 @@ export const CategoryPageContainer= styled.div.attrs((props) => ({
 export const ProductListView =styled.div`
     margin: 0.5rem;
     border: 0.2px solid grey;
-    border-radius: 1px;
+    border-radius: 2px;
     background-color: white;
     display: flex;
     flex-direction: column;
@@ -116,7 +116,7 @@ export const SortProductContainer=styled.div`
     margin: 0.5rem;
     margin-bottom: 0rem;
     border-bottom: none;
-    border-radius: 1px;
+    border-radius: 2px;
     /* overflow-x: scroll; */
     ul{
         /* overflow-x: scroll; */
