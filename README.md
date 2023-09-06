@@ -5,12 +5,12 @@ Full-Stack Flipkart clone
 
 ## 🖥️ Tech Stack
 ![reactjs](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)&nbsp;
-![nextjs](https://www.google.com/imgres?imgurl=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F8%2F8e%2FNextjs-logo.svg%2F2560px-Nextjs-logo.svg.png&tbnid=D0zohEeyM5OS6M&vet=12ahUKEwjFtLuKzZWBAxW8QmwGHfpMDScQMygEegQIARBQ..i&imgrefurl=https%3A%2F%2Fcommons.wikimedia.org%2Fwiki%2FFile%3ANextjs-logo.svg&docid=8iO1dYurJdnoJM&w=2560&h=520&q=next%20js%20logo&ved=2ahUKEwjFtLuKzZWBAxW8QmwGHfpMDScQMygEegQIARBQ)&nbsp;
+![nextjs](https://github.com/birat051/blinkart/assets/79505216/7cd1b47a-29c4-4ab6-a7c8-69bd8b749036)&nbsp;
 ![mongodb](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)&nbsp;
 
 **Deployed On:**
 
-![vercel](https://www.google.com/imgres?imgurl=https%3A%2F%2Fmms.businesswire.com%2Fmedia%2F20211123005573%2Fen%2F929867%2F23%2Fvercel-logo-freelogovectors.net.jpg&tbnid=Ti0NcM0KhL0L6M&vet=12ahUKEwiBoPGvzZWBAxVIbmwGHXyuC9YQMygAegQIARBr..i&imgrefurl=https%3A%2F%2Fwww.businesswire.com%2Fnews%2Fhome%2F20211123005573%2Fen%2FVercel-Announces-150M-in-Series-D-Funding-at-a-2.5B-Valuation-to-Further-Fuel-Innovation-and-Global-Adoption-of-World%25E2%2580%2599s-Fastest-Frontend-Development-Platform&docid=uwVOV0rp5wdZvM&w=1200&h=627&q=vercel&ved=2ahUKEwiBoPGvzZWBAxVIbmwGHXyuC9YQMygAegQIARBr)
+![vercel](https://github.com/birat051/blinkart/assets/79505216/28f1f675-7bcb-4143-9ef0-faa23ce9c54d)
 
 ## 🚀 Features
 
