@@ -26,6 +26,7 @@ Full-Stack Flipkart clone
 10. Dashboard with banners and offers for different categories
 11. Add and manage user addresses
 
+
 ## Sneak Peek of Dashboard:
 
 ![Capture](https://github.com/birat051/blinkart/assets/79505216/c23a50ef-7893-454c-b076-2ea66764cf41)
@@ -48,9 +49,3 @@ If you want to contact me, you can reach me through below handles.
 [![linkedin](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/biratbhattacharjee)
 
 © 2023 Birat Bhattacharjee
-
-
-
-
-
-

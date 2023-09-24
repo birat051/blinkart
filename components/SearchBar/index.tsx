@@ -6,6 +6,7 @@ import { Product } from '@/models/product_data_model';
 import { ProductCategory } from '@/models/product_category_model';
 import { useRouter } from 'next/router';
 import RouteHelper from '@/services/routerHelper';
+import Debounce from '@/utils/debounce';
 
 type searchBarProps=
 {
@@ -23,6 +24,30 @@ function SearchBar(props:searchBarProps) {
   {
     setsearch(e.target.value)
   }
+  async function getSearchResults(){
+    try{
+    const response = await fetch(`/api/search?term=${search}&limit=${5}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    });
+    if(response.status===200)
+    {
+      const data=await response.json()
+      const {categoryResults, productResults}=data
+      // console.log('Got category result: ',categoryResults)
+      // console.log('Got product result: ',productResults)
+      setproductResult([...productResults])
+      setCategoryResult([...categoryResults])
+    }
+  }
+  catch(error)
+  {
+    console.log(error)
+  }
+  }
+  const debounce=new Debounce(getSearchResults, 500)
   useEffect(() => {
     if(search.length<3)
     {
@@ -31,30 +56,8 @@ function SearchBar(props:searchBarProps) {
     return
     }
     setresultVisible(true)
-    async function getSearchResults(){
-      try{
-      const response = await fetch(`/api/search?term=${search}&limit=${5}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-      });
-      if(response.status===200)
-      {
-        const data=await response.json()
-        const {categoryResults, productResults}=data
-        // console.log('Got category result: ',categoryResults)
-        // console.log('Got product result: ',productResults)
-        setproductResult([...productResults])
-        setCategoryResult([...categoryResults])
-      }
-    }
-    catch(error)
-    {
-      console.log(error)
-    }
-    }
-    getSearchResults()
+    debounce.execute()
+    // getSearchResults()
   }, [search])
   useEffect(() => {
     // Add click event listener to the document
